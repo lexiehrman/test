@@ -1,0 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _product-grids.scss --> creates product grids containing product-grid-item
+// --> thumbnail styles live in theme/snippets/product-grid-item.liquid
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+%product-grid,
+.product-grid{
+  @extend %grid;
+  @include scut-clearfix();
+}
+

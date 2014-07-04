@@ -1,0 +1,44 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _media.scss --> Images, iFrames and Media Objects
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+
+img.auto,
+.grid-item img,
+.grid-item iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// #OOCSS Media Object
+//  - http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
+///////////////////////////////////////////////////////////////////////////////
+.media,
+.media-flex {
+  //overflow: hidden;
+  //_overflow: visible;
+  zoom: 1;
+}
+
+.media-img {
+  float: left;
+  margin-right: $gutter/2;
+}
+
+.media-img-right {
+  float: right;
+  margin-left: $gutter;
+}
+
+.media-img img,
+.media-img-right img {
+  display: block;
+}
+
+
+
+
+

@@ -1,0 +1,334 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _forms.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Form Variables
+///////////////////////////////////////////////////////////////////////////////
+$radius: 0px;
+
+
+// Form Globals
+///////////////////////////////////////////////////////////////////////////////
+form {
+  // margin-bottom: $gutter;
+}
+
+input[type="submit"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+input,
+textarea,
+fieldset {
+  border-radius: $radius;
+  max-width: 100%;
+
+  &.input-full {
+    width: 100%;
+  }
+}
+
+input,
+textarea {
+  @include type( $font-one, $delta, $margin: false );
+}
+
+fieldset {
+  padding: $gutter/2 0;
+}
+
+input {
+  display: inline-block;
+  width: auto;
+}
+
+
+// Input width and border
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
+input[type="tel"],
+textarea{
+  border: 1px solid $borderColorForm;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  margin-bottom: 1em;
+
+  &:focus {
+    border: 1px solid darken($borderColorForm, 10%);
+  }
+
+  &[disabled],
+  &.disabled {
+    cursor: default;
+    background-color: $disabledGrey;
+    border-color: $disabledBorder;
+  }
+}
+
+textarea {
+  min-height: 100px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline;
+  margin: 0;
+}
+
+
+// Form Labels
+///////////////////////////////////////////////////////////////////////////////
+label,
+legend {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: bold;
+
+  &.inline {
+    display: inline;
+  }
+}
+
+
+// We don't want the same label treatment for checkboxes/radios
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  font-weight: normal;
+}
+
+label[for] {
+  cursor: pointer;
+}
+
+.label-hint {
+  color: #999;
+}
+
+
+
+// Select Menus
+///////////////////////////////////////////////////////////////////////////////
+select {
+  display: inline-block;
+  //max-width: 100%;
+  min-width: 10rem;
+  background: $white;
+  color:$black;
+  @include type( $font-one, $gamma, $case: 'up', $margin: false );
+  @include scut-padding( 1rem 1rem 1rem 1rem );
+  cursor: pointer;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+
+  // FF hide Arrow Fix - http://stackoverflow.com/questions/6787667/what-is-the-correct-moz-appearance-value-to-hide-dropdown-arrow-of-a-select#answer-18327666
+  text-indent: 0.01px;
+  text-overflow: '';
+
+  // FF 30 Fix http://codepen.io/jamesbarnett/pen/JhHjK
+  @-moz-document url-prefix(){
+    width: 110%;
+  }
+
+  // hide default down arrow in IE10
+  &::-ms-expand {
+    display: none;
+  }
+
+}
+
+
+// This wrapper enables the custom arrows and whatnot
+.selector-wrapper {
+  position:relative;
+  display: block;
+  vertical-align: middle;
+
+  // Help to hide arrow on FF30
+  min-width: 15rem;
+  overflow: hidden;
+
+  @include type( $font-one, $gamma, $case: 'up', $margin: false );
+
+  @include at-query( $min, 768px ){
+    display: inline-block;
+  }
+
+  &:before {
+    content:'';
+    @include scut-absolute( 24px n n n );
+    @include scut-size( 8px 10px );
+    @include scut-triangle(down, 8px 6px, $black );
+
+    pointer-events: none;
+    display:block;
+  }
+
+  // This is created by option-selection.js - easier to hide here than mess with js
+  label{
+    display: none;
+  }
+}
+
+
+
+// Horizontal Form
+///////////////////////////////////////////////////////////////////////////////
+
+form.form-horizontal,
+.form-horizontal {
+  margin-bottom: 0;
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="file"],
+  input[type="number"],
+  input[type="tel"],
+  textarea{
+    display: inline-block;
+    margin-bottom: 0;
+    width: auto;
+  }
+}
+
+
+// Error Styles
+///////////////////////////////////////////////////////////////////////////////
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="file"],
+input[type="number"],
+input[type="tel"],
+textarea {
+  &.error {
+    border-color: $errorRed;
+    background-color: $errorRedBg;
+    color: $errorRed;
+  }
+}
+
+label.error {
+  color: $errorRed;
+}
+
+
+// input Groups
+///////////////////////////////////////////////////////////////////////////////
+
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+
+  .input-group-field:first-child,
+  .input-group-btn:first-child,
+  .input-group-btn:first-child > .btn,
+  input[type="hidden"]:first-child + .input-group-field,
+  input[type="hidden"]:first-child + .input-group-btn > .btn {
+    border-radius: $radius 0 0 $radius;
+  }
+
+  .input-group-field:last-child,
+  .input-group-btn:last-child > .btn {
+   border-radius: 0 $radius $radius 0;
+  }
+
+  input {
+    // Nasty Firefox hack for inputs http://davidwalsh.name/firefox-buttons
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+      margin-top: -1px;
+      margin-bottom: -1px;
+    }
+  }
+}
+
+.input-group-field,
+.input-group-btn {
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.input-group .btn,
+.input-group .input-group-field {
+  height: 37px;
+}
+
+.input-group .input-group-field {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.input-group-btn {
+  position: relative;
+  white-space: nowrap;
+  width: 1%;
+  padding: 0;
+}
+
+
+// Notes and Form Feedback
+///////////////////////////////////////////////////////////////////////////////
+
+.note,
+.errors {
+  border-radius: $radius;
+  padding: $gutter/2;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+
+  ul,
+  ol {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.note {
+  border-color: $borderColor;
+}
+
+.errors {
+  ul {
+    list-style: disc outside;
+    margin-left: 20px;
+  }
+}
+
+.form-success {
+  color: $successGreen;
+  background-color: lighten($successGreen, 65%);
+  border-color: $successGreen;
+}
+
+.form-error,
+.errors {
+  color: $errorRed;
+  background-color: $errorRedBg;
+  border-color: $errorRed;
+}

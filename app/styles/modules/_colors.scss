@@ -1,0 +1,74 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _colors.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Colors by Name
+///////////////////////////////////////////////////////////////////////////////
+$white: #ffffff;
+$black: #2e2d2d;
+$blackFull: #000;
+$red: #ec1e24;
+$grey: #878787;
+$lightgrey: #d5d1d1;
+
+
+// Globals
+///////////////////////////////////////////////////////////////////////////////
+
+/* Global colors */
+$colorText: $black;
+$colorTextLight: $grey;
+$colorTextDark: $black;
+$colorActive: $red;
+$colorHeaders: $black;
+
+/* Backgrounds */
+$colorBody: $white;
+$colorNavBg: $black;
+$colorFooterBg: $black;
+
+// Main Nav
+$colorNav: $white;
+$colorNavHover: darken( $white, 15% );
+$colorSubNav: $lightgrey;
+$colorSubNavHover: lighten( $lightgrey, 15% );
+
+/* Text link colors */
+$colorLink: $black;
+$colorLinkHover: lighten( $black, 10% );
+
+/* Button colors */
+// In _buttons.scss
+
+/* Border colors */
+$borderColor: $red;
+$borderColorForm: $lightgrey;
+
+/* Helper colors */
+$disabledGrey: $grey;
+$disabledBorder: darken($disabledGrey, 25%);
+$errorRed: $red;
+$errorRedBg: lighten($errorRed, 55%);
+$successGreen: $black;
+
+
+// Color Mixin
+///////////////////////////////////////////////////////////////////////////////
+@mixin color( $color, $hover: 'false', $underline: 'false' ){
+  color: $color;
+  @if $hover != 'false'{
+    transition: 0.2s;
+    &:hover,
+    &:focus{
+      color: $hover;
+    }
+  }
+  @if $underline == 'true'{
+    @include scut-link-bb;
+  }
+}
+
+
+

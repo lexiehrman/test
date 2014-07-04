@@ -1,0 +1,29 @@
+# devDependencies #
+###################
+node_modules
+bower_components
+
+# project temp and cache #
+##########################
+.tmp
+.sass-cache
+.sass-cache/*
+
+# larger media files #
+##########################
+app/videos/**
+app/images/**
+*.mov
+*.mp4
+*.ogv
+*.webm
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+._*
+.Spotlight-V100
+.Trashes

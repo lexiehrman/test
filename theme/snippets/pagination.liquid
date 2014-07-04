@@ -1,0 +1,60 @@
+{% comment %}
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// pagination.liquid
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+{% endcomment %}
+
+{% if paginate_style == 'normal' %}
+
+  {% if paginate.pages > 1 %}
+    <nav class="pagination">
+      {% if paginate.previous %}
+        <a class="paginate-word" href="{{ paginate.previous.url }}">Prev</a>
+      {% endif %}
+      {% for part in paginate.parts %}
+        {% if part.is_link %}
+          <a class="paginate-number" href="{{ part.url }}">{{ part.title }}</a>
+        {% else %}
+          {% if part.title == '&hellip;' %}
+            <span class="paginate-number ellipse">{{ part.title }}</span>
+          {% else %}
+            <span class="paginate-number active">{{ part.title }}</span>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      {% if paginate.next %}
+        <a class="paginate-word" href="{{ paginate.next.url }}">Next</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+
+{% endif %}
+
+
+{% if paginate_style == 'blog' %}
+
+  {% if paginate.pages > 1 %}
+    <nav class="pagination">
+      {% if paginate.previous %}
+        <a class="paginate-word" href="{{ paginate.previous.url }}">Newer</a>
+      {% endif %}
+      {% for part in paginate.parts %}
+        {% if part.is_link %}
+          <a class="paginate-number" href="{{ part.url }}">{{ part.title }}</a>
+        {% else %}
+          {% if part.title == '&hellip;' %}
+            <span class="paginate-number ellipse">{{ part.title }}</span>
+          {% else %}
+            <span class="paginate-number active">{{ part.title }}</span>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      {% if paginate.next %}
+        <a class="paginate-word" href="{{ paginate.next.url }}">Older</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+
+{% endif %}

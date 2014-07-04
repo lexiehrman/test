@@ -1,0 +1,97 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _buttons.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Button Variables
+///////////////////////////////////////////////////////////////////////////////
+$button-bg-color-light: $white;
+$button-bg-color-hover-light: $red;
+$button-text-color-light: $white;
+$button-text-color-hover-light: $white;
+
+$button-bg-color-dark: $black;
+$button-bg-color-hover-dark: $red;
+$button-text-color-dark: $black;
+$button-text-color-hover-dark: $white;
+
+$button-border-width: 2px;
+
+// Button Mixin
+///////////////////////////////////////////////////////////////////////////////
+@mixin button( $style: 'light' ){
+  display: inline-block;
+  @include type( $font-one, $alpha, $case: 'up' );
+  @include scut-padding( 0.75rem 2.5rem );
+  background: none;
+  text-decoration: none;
+  transition: $time*2;
+  cursor: pointer;
+
+  @if( $style == 'light' ){
+    color: $button-text-color-light;
+    @include scut-border( $button-border-width solid $button-bg-color-light, y y y y );
+    &:hover:not([disabled]),
+    &:hover:not([disabled]){
+      color: $button-text-color-hover-light;
+      background: $button-bg-color-hover-light;
+      @include scut-border( $button-border-width solid $button-bg-color-hover-light, y y y y );
+    }
+  }
+
+  @if( $style == 'dark' ){
+    color: $button-text-color-dark;
+    @include scut-border( $button-border-width solid $button-bg-color-dark, y y y y );
+    &:hover:not([disabled]),
+    &:hover:not([disabled]){
+      color: $button-text-color-hover-dark;
+      background: $button-bg-color-hover-dark;
+      @include scut-border( $button-border-width solid $button-bg-color-hover-dark, y y y y );
+    }
+  }
+
+  &.disabled{
+    cursor: pointer;
+    opacity: 0.25;
+  }
+
+  @include at-query( $max, 480px ){
+    display: block;
+    width: 100%;
+    text-align:center;
+  }
+}
+
+
+// Button Appearance
+///////////////////////////////////////////////////////////////////////////////
+.btn,
+%btn,
+.btn--dark,
+%btn-dark,
+button,
+input[type="submit"] {
+  appearance: none;
+}
+
+
+// Button Shortcuts
+///////////////////////////////////////////////////////////////////////////////
+%btn,
+.btn{
+  @include button();
+}
+
+%btn-full,
+.btn--full{
+  width: 100%;
+  text-align: center;
+}
+
+%btn--dark,
+.btn--dark{
+  @include button('dark');
+}
+
+

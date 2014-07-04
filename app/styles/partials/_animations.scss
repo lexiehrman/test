@@ -1,0 +1,76 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// animations.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Base Transition Time
+///////////////////////////////////////////////////////////////////////////////
+$time: 0.2s;
+$pushTime: 0.1s;
+
+// Force GPU
+///////////////////////////////////////////////////////////////////////////////
+@mixin useGPU(){
+  transform: translateZ(0);
+}
+
+
+// Fade in
+///////////////////////////////////////////////////////////////////////////////
+@keyframes fadein {
+  0%    { opacity: 0; }
+  100%  { opacity: 1; }
+}
+
+
+// Fade Out
+///////////////////////////////////////////////////////////////////////////////
+@keyframes fadeout {
+  0%    { opacity: 1; }
+  100%  { opacity: 0; }
+}
+
+
+// Spin
+///////////////////////////////////////////////////////////////////////////////
+@keyframes spin {
+ 0%     { transform: rotate(0deg); }
+ 100%   { transform: rotate(359deg); }
+}
+
+
+// Loaders
+///////////////////////////////////////////////////////////////////////////////
+%bgloader,
+.bgloader{
+  background-image: url( $data-loader-white );
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+// Css Element Loader
+.css-loader {
+  $color1: $grey;
+  $color2: $black;
+  $speed: 1s;
+  font-size: 3px;
+  @include scut-center-absolutely(10em 10em);
+  z-index:0;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba( $color1, 0.2 );
+  border-right: 1.1em solid rgba( $color1, 0.2 );
+  border-bottom: 1.1em solid rgba( $color1, 0.2 );
+  border-left: 1.1em solid rgba( $black,0.8 );
+  animation: spin $speed infinite linear;
+}
+.css-loader,
+.css-loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+
+

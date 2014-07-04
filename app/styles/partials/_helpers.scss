@@ -1,0 +1,43 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _layout_helpers.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+$header-height: 55px;
+
+%container{
+  //@include scut-margin( n $col-width n $col-width );
+}
+
+%vertical-align {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// Used to reverse grid items
+@mixin rtl{
+  direction: rtl;
+  text-align:left;
+  > &__block{
+    direction:ltr;
+    text-align:left;
+  }
+}
+
+
+%left { float: left; }
+%right { float: right; }
+%text-center { text-align: center; }
+%text-right { text-align: right; }
+%hidden { display: none; }
+
+%display-table {
+  display: table;
+}
+
+%display-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}

@@ -1,0 +1,65 @@
+{% comment %}
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// header.liquid
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+{% endcomment %}
+
+{% comment %} LOGO {% endcomment %}
+<a href="/" title="Breezy Excursion" class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="181" height="80" viewBox="0 0 181 80"><path fill="#EC1E24" d="M0 0h181v80h-181z"/><g fill="#fff"><path d="M14.9 11.1v57.8h29l6.1-5.6v-18.9l-4.4-3.8 4.4-4.4v-19.8l-5.8-5.2-29.3-.1zm24.1 47.8h-13v-13.9h13v13.9zm0-24h-13v-13.9h13v13.9zM69 44.9h15.9v-9.9h-15.9v-14.1h18.1v-9.9h-18.1v-.1h-12.1v57.6h.1v.5h31v-10.1h-19zM99.2 10.8l-6.3 6.3v22.9l7 6h17.1v12.9h-13.1v-4.8h-10.4v9.2l5.9 5.9h22.4l5.5-5.4v-22.9l-5.9-5.9h-17.4v-13.9h13.1v5h10.5v-9.8l-5.5-5.5zM133 11v9.9h12v48h11.9v-48h12v-9.9z"/><circle cx="163" cy="65.9" r="4.1"/></g></svg></a>
+
+
+{% comment %} Toggles & BreadCrumb {% endcomment %}
+<nav class="nav-toggles">
+  <a class="nav-toggle toggle" data-panel="nav-panel" data-nojax><svg xmlns="http://www.w3.org/2000/svg" width="35" height="34" viewBox="0 0 35 34" transform-origin"50%, 50%"><path class="menu-icon-bg" fill="#EB2427" d="M0 0h35v34h-35z"/><path class="menu-line-top" fill="#fff" d="M7 24.506h21v3.5h-21z"/><g class="menu-line-correct"><g class="menu-line-middle-a"><path class="menu-line-anticorrect" fill="#fff" d="M7 15.75h21v3.502h-21z"/></g></g><g class="menu-line-correct"><g class="menu-line-middle-b"><path class="menu-line-anticorrect" fill="#fff" d="M7 15.75h21v3.502h-21z"/></g></g><path class="menu-line-bottom" fill="#fff" d="M7 7.006h21v3.5h-21z"/></svg></a>
+  <a id="cartToggle" class="cart-toggle toggle" data-panel="cart-panel" data-nojax><svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14"><path class="cart-icon" fill-rule="evenodd" clip-rule="evenodd" fill="#EC1E24" d="M5.455 12.005h3.595c-.137.494-.087.955.171 1.375.193.313.457.512.783.589.667.158 1.318-.301 1.503-1.054.207-.842-.252-1.726-1-1.89l.133-.482c.871-3.146 1.743-6.291 2.612-9.437.02-.072.048-.09.111-.09l1.265.003.092-.076.262-.864.018-.072-.072-.005-2.178-.002c-.061 0-.081.024-.098.087l-.488 1.838c-.021.078-.05.094-.115.094-3.202-.001-6.405-.001-9.609-.001h-2.44l.03.099 2.024 6.111c.02.063.046.089.106.094l2.042.17 2.064.176 2.674.228 1.19.102.059.007-.022.088-.506 1.823c-.019.069-.045.087-.105.087h-5.24c-.381 0-.717.125-.991.441-.404.465-.495 1.177-.229 1.761.268.586.833.895 1.4.766.548-.125.968-.666 1.026-1.317.017-.188 0-.372-.045-.552l-.022-.097z"/></svg><span class="cart-count" id="cartCount">{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span></a>
+  {% include 'breadcrumb' %}
+</nav>
+
+{% comment %} Header Panels {% endcomment %}
+<div class="header-panels">
+
+  {% comment %} Navigation Panel {% endcomment %}
+  <nav class="nav-panel panel" role="navigation" id="nav-panel">
+    <ul class="nav-panel__items">
+      {% for link in linklists.main-menu.links %}
+
+        {% assign child_list_handle = link.title | handleize %}
+
+        {% comment %} Check for children sooner so we can find if parent link is active in accordian {% endcomment %}
+        {% assign parent_link_active = false %}
+        {% for l in linklists[child_list_handle].links %}
+          {% if page_title == l.title or l.active %}
+            {% assign parent_link_active = true %}
+          {% endif %}
+        {% endfor %}
+
+        {% if linklists[child_list_handle].links != blank %}
+        <li class="nav-panel__item nav-panel__item--has-subnav {% if link.active or parent_link_active  %}nav-panel__item--open{% endif %}">
+          <a class="nav-panel__link " href="{{ link.url }}" data-nojax>{{ link.title }}</a>
+          <ul class="nav-panel__subitems">
+              {% for childlink in linklists[child_list_handle].links %}
+              <li class="nav-panel__subitem">
+                <a class="nav-panel__sublink {% if childlink.active %}nav-panel__sublink--active{% endif %}" href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+              </li>
+              {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+          <li class="nav-panel__item nav-panel__item--no-subnav">
+            <a class="nav-panel__link {% if link.active %}nav-panel__link--active{% endif %}" href="{{ link.url }}">{{ link.title }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+
+  {% comment %} Cart Panel {% endcomment %}
+  <section class="cart-panel panel">
+    <div id="cartPanel" class="cart-panel__content"></div>
+  </section>
+
+</div>
+
+

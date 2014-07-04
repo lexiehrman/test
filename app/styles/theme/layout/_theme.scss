@@ -1,0 +1,59 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _theme.scss --> theme/layout/theme.liquid
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+html {
+  background-color: $colorBody;
+}
+
+// Always show empty scrollbar so page doesnt shift
+body{
+  // overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+// Fade in body on load
+///////////////////////////////////////////////////////////////////////////////
+.cssanimations body{
+  opacity: 0;
+  animation-duration: 0.5s;
+  animation-delay: 0.1s;
+  animation-fill-mode: forwards;
+  animation-name: fadein;
+}
+
+
+// Primary page wrapper
+.main{
+  @include scut-relative();
+  transition: $pushTime ease-out;
+  &.push{
+    transform: translateX(20rem);
+  }
+}
+
+
+// Every page is wrapped in this
+#content{
+  @include scut-clearfix();
+}
+
+// Background Loader, hid and shown with JS
+// Contains a centered css-loader
+.page-loader{
+  @include scut-fixed( 0 0 0 0 );
+  background: $white;
+}
+
+// Wrapper class for areas that arent full width
+.wrapper,
+%wrapper {
+  @include clearfix();
+  max-width: $siteWidth;
+  margin: 0 auto;
+  //padding: 0 $gutter;
+}
+
+

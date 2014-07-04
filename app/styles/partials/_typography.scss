@@ -1,0 +1,689 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// TYPOGRAPHY
+// --------------------------------------------------------------------------//
+// 1. Variables
+// 2. Functions
+// 3. Mixins & Placeholders
+// 4. Styles
+// 5. Markup Reference
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// 1. Variables
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Typefaces
+///////////////////////////////////////////////////////////////////////////////
+$font-one: 'mission_gothic', sans-serif;
+$font-two: 'Bevan', serif;
+$base-font-family: $font-one;
+
+
+// Base Sizes & Units
+///////////////////////////////////////////////////////////////////////////////
+$font-weight: normal;
+$line-height: 1.65;
+$font-size: 100;
+$font-base: 16 * ($font-size/100);
+$measure: $font-base * $line-height;
+$type-scale-unit-value: rem;
+
+
+// Type Scale
+///////////////////////////////////////////////////////////////////////////////
+// Modular Scale -----------  16px @ 1:1.333   24px @ 1:1.333  --------------//
+$ultra  : 65;
+$tera   : 54;
+$giga   : 38;
+$mega   : 28;
+$alpha  : 21;
+$beta   : 18;
+$gamma  : 16;
+$delta  : 14;
+$epsilon: 12;
+$zeta   : 11;
+$mini   : 10;
+$tiny   : 9;
+
+$small-print-size: 65%;
+
+
+// Weights
+///////////////////////////////////////////////////////////////////////////////
+$thin: 100;
+$xlight: 200;
+$light: 300;
+$book: 400;
+$medium: 500;
+$semibold: 600;
+$bold: 700;
+$xbold: 800;
+$xxbold: 900;
+
+
+// Letter-spacing
+///////////////////////////////////////////////////////////////////////////////
+$tracking: 0.05rem;
+
+
+// Paragraphs
+///////////////////////////////////////////////////////////////////////////////
+$indent-val: 1.5em;
+$paragraph-vertical-whitespace: true;
+
+
+// Pull Quotes
+///////////////////////////////////////////////////////////////////////////////
+$pull-quote-fontsize: scut-rem($tera);
+$pull-quote-opacity: 1;
+
+
+// Citation
+///////////////////////////////////////////////////////////////////////////////
+$cite-display: block;
+$cite-text-align: right;
+$cite-font-size: scut-rem($delta);
+
+
+// Small Caps
+///////////////////////////////////////////////////////////////////////////////
+$small-caps-weight: 500;
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// 2. Functions
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Context Calculator
+// # Divide a given font-size by base font-size & return a relative value
+///////////////////////////////////////////////////////////////////////////////
+@function context-calc($scale, $base, $value) {
+  @return ($scale/$base)#{$value};
+}
+
+// Measure-Margin
+// # Divide 1 unit of measure by given font-size & return a relative em value
+///////////////////////////////////////////////////////////////////////////////
+@function measure-margin($scale, $measure, $value) {
+  @return ($measure/$scale)#{$value};
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// 3. Mixins & Placeholders
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Type-Scale
+// # Provides a pixel fallback when using rem units
+///////////////////////////////////////////////////////////////////////////////
+@mixin type-scale($scale, $base, $value, $measure:"") {
+  @if $value == rem {
+    font-size: $scale#{px};
+  }
+  font-size: context-calc($scale, $base, $value);
+  @if $measure != "" {
+    margin-bottom: measure-margin($scale, $measure, $value);
+  }
+}
+
+// Hyphens
+// # http://trentwalton.com/2011/09/07/css-hyphenation
+///////////////////////////////////////////////////////////////////////////////
+@mixin css-hyphens($val) {
+  // Accepted values: [ none | manual | auto ]
+  -webkit-hyphens: $val; // Safari 5.1 thru 6, iOS 4.2 thru 6
+  -moz-hyphens: $val; // Firefox 16 thru 20
+  -ms-hyphens: $val; // IE10
+  -o-hyphens: $val; // PRESTO...haha LOL
+  hyphens: $val; // W3C standard
+}
+
+// Smallcaps
+// # http://blog.hypsometry.com/articles/true-small-capitals-with-font-face
+///////////////////////////////////////////////////////////////////////////////
+@mixin smallcaps($font-weight) {
+  font-variant: small-caps;
+  font-weight: $font-weight;
+  text-transform: lowercase;
+}
+
+// Fontsize-Adjust
+// # Correct x-height for fallback fonts: requires secret formula
+// # yet to be discovered. Firefox 17+ only (as of Feb. 2013)
+///////////////////////////////////////////////////////////////////////////////
+@mixin font-size-adjust($adjust-value) {
+  font-size-adjust: $adjust-value;
+}
+
+// General Utilities
+///////////////////////////////////////////////////////////////////////////////
+@mixin fs( $size: $font-base, $lh:"" ){
+  font-size: scut-rem($size);
+  line-height: $line-height;
+  @if $lh != ""{
+    line-height: $lh;
+  }
+}
+
+// One-Off Shortcut Generator
+///////////////////////////////////////////////////////////////////////////////
+@mixin type( $font: $base-font-family, $size: $delta, $weight: $book, $style: 'normal', $case: 'normal', $margin: true ){
+  // Font-Family
+  font-family: $font;
+  // Font-Size
+  @include type-scale($size, $font-base, '#{$type-scale-unit-value}', $measure);
+  // Font-Weight
+  font-weight: $weight;
+  // Font-Style
+  @if $style == 'italic' {
+    @extend %italic;
+  }
+  @if $case == 'up' {
+    text-transform: uppercase;
+  }
+  @if $margin == false {
+    @include scut-margin( n n 0 n );
+  }
+  // Tracking
+  letter-spacing: $tracking;
+}
+
+
+
+// Wordwrap
+// # normal: Indicates that lines may only break at normal word break points.
+// # break-word : Indicates that normally unbreakable words may be broken at
+// # arbitrary points if there are no otherwise acceptable break points.
+///////////////////////////////////////////////////////////////////////////////
+%breakword {
+  word-wrap: break-word;
+}
+
+%normal-wrap {
+  word-wrap: normal;
+}
+
+%inherit-wrap {
+  word-wrap: auto;
+}
+
+
+// Definition-Lists
+// # Two flavors: lining & dictionary
+///////////////////////////////////////////////////////////////////////////////
+@mixin definition-list-style($style) {
+  @if $style == lining {
+    dt,
+    dd {
+      display: inline-block;
+      margin: 0;
+    }
+    dt,
+    dd {
+      & + dt {
+        &:before {
+          content: "\A";
+          white-space: pre;
+        }
+      }
+    }
+    dd {
+      & + dd {
+        &:before {
+          content: ", ";
+        }
+      }
+      &:before {
+          content: ": ";
+          //margin-left: -0.2rem;
+      }
+    }
+  }
+  @if $style == dictionary-style {
+    dt {
+      display: inline-block;
+      counter-reset: definitions;
+      & + dt {
+        &:before {
+          content: ", ";
+          //margin-left: -0.2rem;
+        }
+      }
+    }
+    dd {
+      display: block;
+      counter-increment: definitions;
+      &:before {
+        content: counter(definitions, decimal) ". ";
+      }
+    }
+  }
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// 4. Styles
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Globals
+///////////////////////////////////////////////////////////////////////////////
+html {
+ font: $font-weight #{$font-size}%/#{$line-height} $base-font-family;
+}
+
+body {
+  //@include css-hyphens(auto);
+  @extend %normal-wrap;
+  font-weight: $light;
+}
+
+small {
+  font-size: $small-print-size;
+}
+
+// Typefaces
+///////////////////////////////////////////////////////////////////////////////
+%serif {
+  //font-family: $serif;
+}
+
+%sans-serif {
+  font-family: $font-one;
+}
+
+%body{
+  font-family: $font-one;
+}
+
+%display{
+  font-family: $font-one;
+}
+
+%heading{
+  font-family: $font-one;
+}
+
+// Weights
+///////////////////////////////////////////////////////////////////////////////
+%thin{
+  font-weight:  $thin;
+}
+
+%xlight{
+  font-weight:  $xlight;
+}
+
+%light{
+  font-weight:  $light;
+}
+
+%book{
+  font-weight:  $book;
+}
+
+%medium{
+  font-weight:  $medium;
+}
+
+%semibold{
+  font-weight:  $semibold;
+}
+
+%bold{
+  font-weight:  $bold;
+}
+
+%xbold{
+  font-weight:  $xbold;
+}
+
+%xxbold{
+  font-weight:  $xxbold;
+}
+
+// Styles
+///////////////////////////////////////////////////////////////////////////////
+%italic{
+  font-style: italic;
+}
+
+%normal{
+  font-style: normal;
+}
+
+
+// Headings
+///////////////////////////////////////////////////////////////////////////////
+$sizes:
+  ultra $ultra,
+  tera $tera,
+  giga $giga,
+  mega $mega,
+  alpha $alpha,
+  beta $beta,
+  gamma $gamma,
+  delta $delta,
+  epsilon $epsilon,
+  zeta $zeta,
+  mini $mini,
+  tiny $tiny;
+
+@each $size in $sizes {
+  %#{nth($size, 1)} {
+    @include type-scale(nth($size, 2), $font-base, '#{$type-scale-unit-value}', $measure);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+  line-height: 1; // this fixes huge spaces when a heading wraps onto two lines
+  margin-top: 0;
+  letter-spacing: $tracking;
+}
+
+h1 {
+  @extend %mega;
+}
+
+h2 {
+  @extend %alpha;
+}
+
+h3 {
+  @extend %beta;
+}
+
+h4 {
+  @extend %gamma;
+}
+
+h5 {
+  @extend %delta;
+}
+
+h6 {
+  @extend %epsilon;
+}
+
+// Parargraphs
+///////////////////////////////////////////////////////////////////////////////
+%p,
+p {
+  @include type($base-font-family, $gamma, $book );
+
+  line-height: $line-height;
+  letter-spacing: $tracking;
+
+  @if $paragraph-vertical-whitespace == false {
+    & + p {
+      text-indent: $indent-val;
+      margin-top: -$indent-val;
+    }
+  }
+}
+
+a{
+  text-decoration:none;
+}
+
+
+
+// Hyphenation
+// # http://meyerweb.com/eric/thoughts/2012/12/17/where-to-avoid-css-hyphenation
+///////////////////////////////////////////////////////////////////////////////
+abbr,
+acronym,
+blockquote,
+code,
+dir,
+kbd,
+listing,
+plaintext,
+q,
+samp,
+tt,
+var,
+xmp {
+  @include css-hyphens(none);
+}
+
+
+
+
+
+// Abbreviations
+// # See Markup Reference
+///////////////////////////////////////////////////////////////////////////////
+abbr {
+  @include smallcaps($small-caps-weight);
+  &[title]:hover {
+    cursor: help;
+  }
+}
+
+// Definition Lists
+// # See Markup Reference
+///////////////////////////////////////////////////////////////////////////////
+.lining {
+  @include definition-list-style(lining);
+}
+
+.dictionary-style {
+  @include definition-list-style(dictionary-style);
+}
+
+
+// Blockquote & Citation
+// # Use pre-defined markup and add a class to blockquote element.
+// # ex: .blockquote { @include blockquote("-"); }
+// # "-" is citation flourish.
+///////////////////////////////////////////////////////////////////////////////
+@mixin cite-style($display, $text-align, $font-size) {
+  display: $display;
+  font-size: $font-size;
+  text-align: $text-align;
+}
+
+%cite {
+  @include cite-style($cite-display, $cite-text-align, $cite-font-size);
+}
+
+@mixin blockquote($color: $color-text){
+  p {
+    @include type( $font-one, $beta, $bold, $style: 'italic' );
+    line-height: 1.25;
+    text-align:center;
+    // color: $color;
+    &:last-of-type {
+      margin-bottom: #{$line-height/2}rem;
+    }
+  }
+  figcaption {
+    @extend %cite;
+    color: $color;
+    &:before {
+      content: $scut-mdash;
+    }
+  }
+}
+
+// Pull-Quotes
+///////////////////////////////////////////////////////////////////////////////
+@mixin pull-quotes($pull-quote-fontsize, $pull-quote-opacity) {
+  position: relative;
+  @include scut-margin(2rem);
+  padding: context-calc($pull-quote-fontsize, $pull-quote-fontsize, em);
+  &:before,
+  &:after {
+    height: context-calc($pull-quote-fontsize, $pull-quote-fontsize, em);
+    opacity: $pull-quote-opacity;
+    position: absolute;
+    font-size: $pull-quote-fontsize;
+  }
+  &:before {
+    content: $scut-ldquo;
+    top:  0;
+    left: 0;
+  }
+  &:after {
+    content: $scut-rdquo;
+    bottom: 0;
+    right: 0;
+  }
+  p{
+   // @include type( $base-font-family, $mega, $bold, $case: 'up' );
+    line-height: 1;
+  }
+}
+
+// Pull Quotes
+// See Markup Reference
+///////////////////////////////////////////////////////////////////////////////
+.pull-quote {
+   @include pull-quotes($pull-quote-fontsize, $pull-quote-opacity);
+}
+
+
+// Project Specific Mixins
+// --> Named from Source PSD file for workflow consistency
+///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+/*
+* FlowType Sass Mixin 1.0
+https://github.com/bphillips201/FlowType.JS/tree/sass-mixin
+*/
+
+// Settings
+$maximum: 1200;
+$minimum: 480;
+$maxFont: 17;
+$minFont: 15;
+$fontRatio: 30;
+
+@mixin flowtype($maximum, $minimum, $maxFont, $minFont, $fontRatio) {
+  $fontSize: $maxFont;
+  $tempFontSize: $fontSize;
+
+  @media screen and (max-width: #{$minimum}px) {
+    font-size: #{$minFont}px;
+  }
+
+  @for $i from $minimum through $maximum {
+    $fontBase: floor($i / $fontRatio);
+
+    @if $fontBase > $maxFont {
+      $fontSize: $maxFont;
+    }
+    @else if $fontBase < $minFont {
+      $fontSize: $minFont;
+    }
+    @else {
+      $fontSize: $fontBase;
+    }
+
+    @if $tempFontSize != $fontSize {
+      @media screen and (min-width: #{$i}px) {
+        font-size: #{$fontSize}px;
+      }
+    }
+
+    $tempFontSize: $fontSize;
+  }
+}
+
+html {
+  @include flowtype($maximum, $minimum, $maxFont, $minFont, $fontRatio);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// 5. Markup Reference
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+// Abbreviations
+///////////////////////////////////////////////////////////////////////////////
+/*
+  <abbr title="hyper text markup language">HMTL</abbr>
+*/
+
+// Definition-List: Lining Style
+///////////////////////////////////////////////////////////////////////////////
+/*
+  <dl class="lining">
+    <dt><b></b></dt>
+    <dd></dd>
+  </dl>
+*/
+
+// Definition-Lists: Dictionary Definition Style
+///////////////////////////////////////////////////////////////////////////////
+/*
+  <dl class="dictionary-style">
+    <dt><b></b></dt>
+      <dd></dd>
+  </dl>
+*/
+
+// Blockquote-Markup
+///////////////////////////////////////////////////////////////////////////////
+/*
+  <figure>
+    <blockquote cite="">
+      <p></p>
+    </blockquote>
+    <figcaption>
+      <cite>
+        <small><a href=""></a></small>
+      </cite>
+    </figcaption>
+  </figure>
+*/
+
+// Pull-Quotes Markup
+///////////////////////////////////////////////////////////////////////////////
+/*
+  <aside class="pull-quote">
+    <blockquote>
+      <p></p>
+    </blockquote>
+  </aside>
+*/
+
+// Figures Markup
+///////////////////////////////////////////////////////////////////////////////
+/*
+  <figure>
+    <figcaption>
+      <strong>Fig. 4.2 | </strong>Type Anatomy, an excerpt from Mark Boulton's book<cite title="http://designingfortheweb.co.uk/book/part3/part3_chapter11.php">"Designing for the Web"</cite>
+    </figcaption>
+  </figure>
+*/
+

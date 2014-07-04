@@ -1,0 +1,489 @@
+{% comment %}
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// product.liquid
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+{% endcomment %}
+
+{% comment %}
+///////////////////////////////////////////////////////////////////////////////
+// Ajax Wrapper
+///////////////////////////////////////////////////////////////////////////////
+{% endcomment %}
+<div id="content" class="{{ template }}" data-template="{{ template }}" data-title="{{ page_title | handle }}">
+
+  {% comment %} Cart Form: Price, Size Selector, Add To Cart {% endcomment %}
+  <form action="/cart/add" method="post" enctype="multipart/form-data" id="addToCartForm">
+
+  {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
+  // Top Product View
+  ///////////////////////////////////////////////////////////////////////////////
+  {% endcomment %}
+  <div class="product-center">
+    <section class="product-wrapper product-wrapper--top product-wrapper--rev" itemscope itemtype="http://schema.org/Product">
+
+      <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+      <meta itemprop="image" content="{{ product.featured_image.src | product_img_url: 'grande' }}">
+
+      {% comment %} Product Images {% endcomment %}
+      <div class="product-views">
+        <div class="product-views__align">
+          {% if product.images.size == 0 %}
+            <div class="product-views__image-container">
+              <img class="product-views__image" src="{{ '' | product_img_url: 'grande' }}" alt="{{ product.title | escape }}" onload="imgLoadedLoader(this)">
+            </div>
+          {% else %}
+            <div class="product-views__image-container">
+              <div class="css-loader">Loading...</div>
+              <a class="product-views__image-link" href="{{ product.featured_image.src | product_img_url: '2048x2048' }}">
+                <img class="product-views__image" src="{{ product.featured_image.src | product_img_url: '1024x1024' }}" alt="{{ product.title | escape }}" onload="imgLoadedLoader(this)">
+              </a>
+            </div>
+            {% if product.images.size > 1 %}
+              <ul class="product-views__thumb-container">
+                {% for image in product.images offset:1 %}
+                  <li>
+                    <a class="product-views__thumb-link {% if forloop.index == 1 %}active{% endif %}" href="{{ image.src | product_img_url: 'original' }}">{{ forloop.index }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+
+      {% comment %}Item Description & Add to Cart {% endcomment %}
+      <div class="product-info" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+
+        <header class="product-info__title-wrapper">
+          <h2 class="product-info__title" itemprop="name">{{ product.title }}</h2>
+        </header>
+
+        <div class="product-info__description rte" itemprop="description">
+          {{ product.description }}
+        </div>
+
+        {% if product.available %}
+          <link itemprop="availability" href="http://schema.org/InStock">
+        {% else %}
+          <link itemprop="availability" href="http://schema.org/OutOfStock">
+        {% endif %}
+
+        {% comment %} Price with 'Compare At' action {% endcomment %}
+        {% if product.compare_at_price > product.price %}
+          <span id="productPrice" class="product-info__price product-info__price--on-sale" itemprop="price">
+            Sale! {{ product.price | money | remove: '.00' }}
+          </span>
+          <small id="comparePrice" class="product-info__price--compare">
+            Was:
+            {{ product.compare_at_price_max | money | remove: '.00' }}
+          </small>
+        {% else %}
+          <span id="productPrice" class="product-info__price" itemprop="price">
+            {{ product.price | money | remove: '.00' }}
+          </span>
+        {% endif %}
+
+        {% comment %} Select Menu - replaced by option_selection.js {% endcomment %}
+        <select name="id" id="productSelect" class="product-info__variants">
+          {% for variant in product.variants %}
+            {% if variant.available %}
+              <option value="{{variant.id}}">
+                {{ variant.title }} - {{ variant.price | money_with_currency | remove: '.00' }}
+              </option>
+            {% else %}
+              <option disabled="disabled">
+                {{ variant.title }} - Sold out
+              </option>
+            {% endif %}
+          {% endfor %}
+        </select>
+
+        <div class="product-info__add-wrapper">
+          <button type="submit" class="product-info__add" id="addToCart">Add to Cart</button>
+        </div>
+
+      </div>
+
+    </section>
+  </div>
+
+  {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
+  // Lookbook Image
+  ///////////////////////////////////////////////////////////////////////////////
+  {% endcomment %}
+  {% if product.metafields.radiator.lookbook_image %}
+    <div class="product-lookbook" style="background-image: url( '{{ product.metafields.radiator.lookbook_image }}' )"></div>
+  {% endif %}
+
+  {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
+  // Related Products
+  ///////////////////////////////////////////////////////////////////////////////
+  {% endcomment %}
+
+  {% assign number_of_related_products_to_show = 2 %}
+  {% assign number_of_related_products_to_fetch = number_of_related_products_to_show | plus: 20 %}
+
+  {% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+    {% assign found_a_collection = false %}
+    {% for c in product.collections %}
+      {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 2 %}
+        {% assign found_a_collection = true %}
+        {% assign collection = c %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if collection and collection.products_count > 1 %}
+    <section class="product-grid product-grid--related">
+      <div class="product-related">
+        <div class="product-related__grid">
+          <div class="product-related__info">
+            <h3 class="product-related__headline">More from this Collection</h3>
+            <p class="product-related__description">{{ collection.description }}</p>
+            <a class="btn btn--full" href="{{ collection.url }}">Shop Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-grid__items related">
+        {% assign current_product = product %}
+        {% assign current_product_found = false %}
+        {% for product in collection.products limit: number_of_related_products_to_fetch %}
+          {% if product.handle == current_product.handle %}
+             {% assign current_product_found = true %}
+          {% else %}
+             {% unless current_product_found == false and forloop.last %}
+                {% include 'product-grid-item' %}
+             {% endunless %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+
+
+  {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
+  // Bottom Product View
+  ///////////////////////////////////////////////////////////////////////////////
+  {% endcomment %}
+  <div class="product-center {% unless product.metafields.radiator.lookbook_image %}product-center--hide{% endunless %}">
+    <section class="product-wrapper product-wrapper--bottom" itemscope itemtype="http://schema.org/Product">
+
+      <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+      <meta itemprop="image" content="{{ product.featured_image.src | product_img_url: 'grande' }}">
+
+      {% comment %} Product Images {% endcomment %}
+      <div class="product-views">
+        <div class="product-views__align">
+          {% if product.images.size == 0 %}
+            <div class="product-views__image-container">
+              <img class="product-views__image" src="{{ '' | product_img_url: 'grande' }}" alt="" onload="imgLoadedLoader(this)">
+            </div>
+          {% else %}
+            <div class="product-views__image-container">
+              <div class="css-loader">Loading...</div>
+              <a class="product-views__image-link" href="{{ product.featured_image.src | product_img_url: 'original' }}" >
+                <img class="product-views__image" src="{{ product.featured_image.src | product_img_url: '1024x1024' }}" alt="{{ product.featured_image.alt | escape }}" onload="imgLoadedLoader(this)">
+              </a>
+            </div>
+            {% if product.images.size > 1 %}
+              <ul class="product-views__thumb-container">
+                {% for image in product.images offset:1 %}
+                  <li>
+                    <a class="product-views__thumb-link {% if forloop.index == 1 %}active{% endif %}" href="{{ image.src | product_img_url: 'original' }}">{{ forloop.index }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+
+      {% comment %}Item Description & Add to Cart {% endcomment %}
+      <div class="product-info" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+
+        <header class="product-info__title-wrapper">
+          <h2 class="product-info__title" itemprop="name">{{ product.title }}</h2>
+        </header>
+
+        <div class="product-info__description rte" itemprop="description">
+          {{ product.description }}
+        </div>
+
+        {% if product.available %}
+          <link itemprop="availability" href="http://schema.org/InStock">
+        {% else %}
+          <link itemprop="availability" href="http://schema.org/OutOfStock">
+        {% endif %}
+
+
+        {% comment %} Price with 'Compare At' action {% endcomment %}
+        {% if product.compare_at_price > product.price %}
+          <span id="productPrice2" class="product-info__price product-info__price--on-sale" itemprop="price">
+            Sale! {{ product.price | money | remove: '.00' }}
+          </span>
+          <small id="comparePrice2" class="product-info__price--compare">
+            Was:
+            {{ product.compare_at_price_max | money | remove: '.00' }}
+          </small>
+        {% else %}
+          <span id="productPrice2" class="product-info__price" itemprop="price">
+            {{ product.price | money | remove: '.00' }}
+          </span>
+        {% endif %}
+
+        {% comment %} Select Menu - replaced by option_selection.js {% endcomment %}
+        <select name="id" id="productSelect2" class="product-info__variants">
+          {% for variant in product.variants %}
+            {% if variant.available %}
+              <option value="{{variant.id}}">
+                {{ variant.title }} - {{ variant.price | money_with_currency | remove: '.00' }}
+              </option>
+            {% else %}
+              <option disabled="disabled">
+                {{ variant.title }} - Sold out
+              </option>
+            {% endif %}
+          {% endfor %}
+        </select>
+
+        {% comment %}
+        Quantity selector is optional
+        --
+        <label for="quantity">Qty: </label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1">
+        {% endcomment %}
+
+        <div class="product-info__add-wrapper">
+          <button type="submit" class="product-info__add" id="addToCart2">Add to Cart</button>
+        </div>
+
+      </div>
+
+    </section>
+  </div>
+
+  </form>
+
+  {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
+  // Zoom Modal
+  ///////////////////////////////////////////////////////////////////////////////
+  {% endcomment %}
+  <div class="product-zoom closed">
+    <img class="product-zoom__image" src="" onload="imgLoadedLoader(this)">
+    <div class="css-loader">Loading...</div>
+  </div>
+
+
+
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script>
+
+  var selectCallback = function(variant, selector) {
+
+    var addToCart = $('.product-info__add'),
+        productPrice = $('.product-info__price'),
+        comparePrice = $('.product-info__price--compare');
+
+    if (variant) {
+      if (variant.available) {
+        // We have a valid product variant, so enable the submit button
+        addToCart.html('<span>Add to Cart</span> <span class="css-loader ajaxifyCart-loader">Loading...</span>').removeClass('disabled').removeAttr("disabled");
+      } else {
+        // Variant is sold out, disable the submit button
+        addToCart.html('Sold Out').addClass('disabled').attr("disabled", "disabled");
+      }
+
+      // Regardless of stock, update the product price
+      productPrice.html(Shopify.formatMoney(variant.price, "{{ shop.money_format }}"));
+
+      // Also update and show the product's compare price if necessary
+      if ( variant.compare_at_price > variant.price ) {
+        comparePrice
+          .html('Was: ' + Shopify.formatMoney(variant.compare_at_price, "{{ shop.money_format }}"))
+          .show();
+      } else {
+        comparePrice.hide();
+      }
+
+    } else {
+      // The variant doesn't exist. Just a safegaurd for errors, but disable the submit button anyway
+      $('.single-option-selector').eq(2).change();
+      addToCart.html('Add To Cart').addClass('disabled').attr("disabled", "disabled");
+    }
+
+  };
+
+  // Linked Options: http://docs.shopify.com/manual/configuration/store-customization/advanced-navigation/linked-product-options
+  var Shopify = Shopify || {};
+
+  Shopify.optionsMap = {};
+
+  Shopify.updateOptionsInSelector = function(selectorIndex) {
+
+    switch (selectorIndex) {
+      case 0:
+        var key = 'root';
+        var selector = jQuery('.single-option-selector:eq(0)');
+        break;
+      case 1:
+        var key = jQuery('.single-option-selector:eq(0)').val();
+        var selector = jQuery('.single-option-selector:eq(1)');
+        break;
+      case 2:
+        var key = jQuery('.single-option-selector:eq(0)').val();
+        key += ' / ' + jQuery('.single-option-selector:eq(1)').val();
+        var selector = jQuery('.single-option-selector:eq(2)');
+    }
+
+    var initialValue = selector.val();
+    selector.empty();
+    var availableOptions = Shopify.optionsMap[key];
+    for (var i=0; i<availableOptions.length; i++) {
+      var option = availableOptions[i];
+      var newOption = jQuery('<option></option>').val(option).html(option);
+      selector.append(newOption);
+    }
+    jQuery('.swatch[data-option-index="' + selectorIndex + '"] .swatch-element').each(function() {
+      if (jQuery.inArray($(this).attr('data-value'), availableOptions) !== -1) {
+        $(this).removeClass('soldout').show().find(':radio').removeAttr('disabled','disabled').removeAttr('checked');
+      }
+      else {
+        $(this).addClass('soldout').hide().find(':radio').removeAttr('checked').attr('disabled','disabled');
+      }
+    });
+    if (jQuery.inArray(initialValue, availableOptions) !== -1) {
+      selector.val(initialValue);
+    }
+    selector.trigger('change');
+
+  };
+
+  Shopify.linkOptionSelectors = function(product) {
+    // Building our mapping object.
+    for (var i=0; i<product.variants.length; i++) {
+      var variant = product.variants[i];
+      if (variant.available) {
+        // Gathering values for the 1st drop-down.
+        Shopify.optionsMap['root'] = Shopify.optionsMap['root'] || [];
+        Shopify.optionsMap['root'].push(variant.option1);
+        Shopify.optionsMap['root'] = Shopify.uniq(Shopify.optionsMap['root']);
+        // Gathering values for the 2nd drop-down.
+        if (product.options.length > 1) {
+          var key = variant.option1;
+          Shopify.optionsMap[key] = Shopify.optionsMap[key] || [];
+          Shopify.optionsMap[key].push(variant.option2);
+          Shopify.optionsMap[key] = Shopify.uniq(Shopify.optionsMap[key]);
+        }
+        // Gathering values for the 3rd drop-down.
+        if (product.options.length === 3) {
+          var key = variant.option1 + ' / ' + variant.option2;
+          Shopify.optionsMap[key] = Shopify.optionsMap[key] || [];
+          Shopify.optionsMap[key].push(variant.option3);
+          Shopify.optionsMap[key] = Shopify.uniq(Shopify.optionsMap[key]);
+        }
+      }
+    }
+    // Update options right away.
+    Shopify.updateOptionsInSelector(0);
+    if (product.options.length > 1) Shopify.updateOptionsInSelector(1);
+    if (product.options.length === 3) Shopify.updateOptionsInSelector(2);
+    // When there is an update in the first dropdown.
+    jQuery(".single-option-selector:eq(0)").change(function() {
+      Shopify.updateOptionsInSelector(1);
+      if (product.options.length === 3) Shopify.updateOptionsInSelector(2);
+      return true;
+    });
+    // When there is an update in the second dropdown.
+    jQuery(".single-option-selector:eq(1)").change(function() {
+      if (product.options.length === 3) Shopify.updateOptionsInSelector(2);
+      return true;
+    });
+
+  };
+
+
+jQuery(function($) {
+
+  // Related Products
+  var howMany = 2;
+  $('.product-grid__items.related > .product-grid-item').pick(howMany);
+  app.debug('jquery.pick success');
+
+
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback
+    });
+
+    // Duplicate this for bottom selector
+    new Shopify.OptionSelectors('productSelect2', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback
+    });
+
+
+  // Instantiate Linked options: http://docs.shopify.com/manual/configuration/store-customization/advanced-navigation/linked-product-options
+  {% if product.available and product.options.size > 1 %}
+    Shopify.linkOptionSelectors({{ product | json }});
+  {% endif %}
+
+  // Disable out of stock variants so they cant be selected
+  // Note: Needs to be modified if using linked options: http://docs.shopify.com/support/your-store/products/how-do-i-remove-sold-out-variants
+  {% if product.options.size == 1 %}
+    {% for variant in product.variants %}
+      {% unless variant.available %}
+        $('.single-option-selector').each(function(){
+          $(this).find('option').eq('{{ forloop.index0 }}').attr('disabled', 'disabled');
+        })
+      {% endunless %}
+    {% endfor %}
+    $('.single-option-selector').trigger('change');
+  {% endif %}
+
+  // Hide selectors if we only have 1 variant and its title contains 'Default'.
+  {% if product.variants.size == 1 %}
+    $('.selector-wrapper').hide();
+    $('.single-option-selector').eq(2).change();
+    $('.product-info__add').removeClass('disabled').removeAttr("disabled");
+  {% endif %}
+
+  // Dynamically add An Option element with each Options Name
+  // Duplicated variabesl for Bottom IDS
+  {% if product.options.size >= 1 %}
+    {% if product.variants.size != 1 %}
+      var selectCounter = 0,
+          selectOption,
+          $selectMenu,
+          $selectOptionBottom,
+          $selectMenuBottom;
+
+      {% for option in product.options %}
+        selectOption = '{{ option }}';
+        $selectMenu = $('#productSelect-option-' + selectCounter ).prepend('<option disabled>------------</option>').prepend('<option selected disabled>Select A ' +  selectOption + '</option>');
+        $selectMenuBottom = $('#productSelect2-option-' + selectCounter ).prepend('<option disabled>------------</option>').prepend('<option selected disabled>Select A ' +  selectOption + '</option>');
+        selectCounter++;
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+
+});
+
+</script>
+
+
+
+</div>

@@ -1,0 +1,31 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _footer.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+.breadcrumb{
+  display: inline-block;
+  height: 34px;
+  background: $black;
+  vertical-align: top;
+  @include scut-padding( 10px 0.625rem ); // magic numbers to lock in spacing
+  @include type($font-one, $gamma, $book, $case: 'up', $margin: false );
+  color: $white;
+  &__link--thin{
+    @include type($font-one, $gamma, $thin, $case: 'up', $margin: false );
+  }
+  &__link--bold{
+    @include type($font-one, $gamma, $bold, $case: 'up', $margin: false );
+  }
+  a{
+    @include color($white, $red );
+  }
+  i{
+    display: inline-block;
+    @include scut-padding( n 0.5rem );
+  }
+  span{
+    display: inline-block;
+  }
+}

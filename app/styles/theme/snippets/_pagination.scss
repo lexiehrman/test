@@ -1,0 +1,40 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _pagination.scss --> theme/snippets/pagination.liquid
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+
+// Pagination
+///////////////////////////////////////////////////////////////////////////////
+.pagination{
+  clear: both;
+  @include scut-margin( 4rem n );
+  text-align: center !important;
+}
+
+.paginate-word,
+.paginate-number{
+  @include type($font-one, $gamma, $bold, $case: 'up');
+  @include color($colorText, $colorActive );
+}
+
+.paginate-number.active{
+  color: $colorActive;
+}
+
+.paginate-word{
+  &:first-child{
+    @include scut-padding( n 2rem n n );
+  };
+  &:last-child{
+    @include scut-padding( n n n 2rem );
+  }
+}
+
+.paginate-number{
+  @include scut-padding( n 0.5rem );
+}
+
+
+

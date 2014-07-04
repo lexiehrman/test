@@ -1,0 +1,63 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// rte.scss
+// -> Styles explicity reserved for the Rich Text Editor
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+.rte{
+
+  p{
+    @include type( $font-one, $delta, $light );
+  }
+
+  a{
+    @include color( $grey, $red );
+  }
+
+  strong{
+    font-weight: $bold;
+  }
+
+  ul{
+    @extend %default-ul;
+    @include scut-margin( n n 1.75rem n);
+  }
+
+  ol{
+    @extend %default-ol;
+    @include scut-margin( n n 1.75rem n);
+  }
+
+  // helper classes
+  .red{
+    color: $red;
+  }
+
+  .uppercase{
+    text-transform: uppercase;
+  }
+
+  .center{
+    text-align: center;
+  }
+
+  .pull-quote{
+    &:before,
+    &:after{
+      color: $red;
+    }
+    p{
+      text-align: center;
+      @include type( $base-font-family, $mega, $bold, $case: 'up' );
+      line-height: 1;
+      color:$red;
+    }
+  }
+
+  // Wrapper created by FitVids.js
+  .fluid-width-video-wrapper{
+    @include scut-margin( n n 1.75rem n );
+  }
+
+}

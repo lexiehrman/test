@@ -1,0 +1,55 @@
+{% comment %}
+  Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{% endcomment %}
+{% unless template == 'index' %}
+
+<div class="breadcrumb">
+
+  {% if template contains 'product' %}
+
+    {% if collection %}
+      <a href="/collections/all" class="breadcrumb__link--thin" title="View All">Shop</a>
+      <i>/</i>
+      {% if collection.handle %}
+         {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+         <a href="{{ url }}" class="breadcrumb__link--bold">{{ collection.title  }}</a>
+      {% endif %}
+    {% endif %}
+
+  {% elsif template contains 'collection' and collection.handle %}
+    <a href="/collections/all" class="breadcrumb__link--thin" title="View All">Shop</a>
+    {% if current_tags %}
+      <i>/</i>
+      {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+      {{ collection.title | link_to: url }}
+      <i>/</i>
+      <span>{{ current_tags.first }}</span>
+    {% else %}
+      <i>/</i>
+      <span>{{ collection.title }}</span>
+    {% endif %}
+
+  {% elsif template == 'blog' %}
+    {{ blog.title | link_to: blog.url }}
+
+  {% elsif template == 'article' %}
+    {{ blog.title | link_to: blog.url }}
+    <i>/</i>
+    <span>{{ article.title | escape | truncatewords: 2 }}</span>
+
+  {% elsif template contains 'page' %}
+
+   <span>{{ page.title }}</span>
+
+  {% elsif template contains 'cart' %}
+
+   <span>Cart</span>
+
+  {% else %}
+
+   <i>/</i>
+   <span>{{ page_title }}</span>
+
+  {% endif %}
+</div>
+{% endunless %}

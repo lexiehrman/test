@@ -1,0 +1,57 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _product-grid-item.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+.product-grid-item{
+  @extend %grid-item;
+  //@extend %one-half;
+  @extend %medium--one-third;
+  @extend %large--one-third;
+
+  &:hover a{
+    color: $red;
+  }
+
+  &__imagelink{
+    display: block;
+    @include scut-ratio-box;
+  }
+
+  &__image{
+    @include scut-absolute( 0 n n 0 );
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    opacity: 0;
+    transition: $time * 3;
+    &.loaded{
+      opacity: 1;
+    }
+  }
+
+
+  &__info{
+    min-height: 7rem;
+    text-align: center;
+    @include scut-margin( 1.5rem n );
+    @include scut-padding( n 1rem );
+  }
+
+  &__title{
+    display: block;
+    @include type( $font-one, $gamma, $bold, $case: 'up', $margin: false);
+    @include scut-margin( n n 0.75rem n );
+    @include color( $black, $red );
+    transition: $time;
+  }
+
+  &__price{
+    display: block;
+    @include type( $font-one, $delta, $book, $case: 'up');
+    color: $grey;
+  }
+
+
+}

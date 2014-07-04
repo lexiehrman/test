@@ -1,0 +1,53 @@
+///////////////////////////////////////////////////////////////////////////////
+// --------------------------------------------------------------------------//
+// _lists.scss
+// --> Ordered and Un-Ordered lists
+// --> requires _typography.scss
+// --------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  &%default-ul {
+    list-style-type: disc;
+    list-style-position:inside;
+    line-height: $line-height;
+    margin-bottom: ($line-height / 2)+'rem';
+    padding-left: $line-height;
+  }
+
+  &%default-ol {
+    list-style-type: decimal;
+    list-style-position:inside;
+    line-height: $line-height;
+    margin-bottom: ($line-height / 2)+'rem';
+    padding-left: $line-height;
+  }
+}
+
+// Definition Lists
+dl{
+  line-height: $line-height;
+  margin-bottom: ($line-height / 2)+'rem';
+
+  dt{
+    display: block;
+    @include type($font-one, $beta, $book, $margin: false);
+  }
+
+  dd{
+    display: block;
+    @include type($font-one, $delta, $light, $margin: false);
+  }
+
+  dd ~ dt{
+    @include scut-margin( 1.75rem n n n );
+  }
+
+  dd:last-child{
+    @include scut-margin( n n 1.75rem n );
+  }
+}

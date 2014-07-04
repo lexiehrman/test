@@ -1,0 +1,23 @@
+{% comment %}
+///////////////////////////////////////////////////////////////////////////////
+// collection.liquid
+///////////////////////////////////////////////////////////////////////////////
+{% endcomment %}
+
+<div id="content" class="{{ template }}" data-template="{{ template }}" data-title="{{ page_title | handle }}">
+
+  {% paginate collection.products by settings.collection_paginate_num %}
+
+  <section class="collection-product-grid">
+    {% for product in collection.products %}
+      {% include 'product-grid-item' %}
+    {% endfor %}
+
+    {% assign paginate_style = 'normal' %}
+    {% include 'pagination' %}
+
+  </section>
+
+  {% endpaginate %}
+
+</div>

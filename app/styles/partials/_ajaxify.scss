@@ -1,0 +1,367 @@
+// ==============================================================================
+// Ajaxify Colours
+// ==============================================================================
+
+/* js QTY Colors */
+$borderColor: $grey;
+$drawerBackgroundColor: $black;
+$drawerBorderColor: $grey;
+
+
+
+// ==============================================================================
+// Ajaxify Loader
+// ==============================================================================
+.ajaxifyCart-loader {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  left: 80%;
+  top: 50%;
+  border-top: 1.1em solid rgba( $white, 0.5 );
+  border-right: 1.1em solid rgba( $white, 0.5 );
+  border-bottom: 1.1em solid rgba( $white, 0.5 );
+  border-left: 1.1em solid rgba( $white,1 );
+  transition: opacity 0.1s;
+
+  .flip--is-loading & {
+    display: block;
+    opacity: 1;
+  }
+}
+
+.flip--is-loading button{
+  position: relative;
+  @include scut-padding( n 5rem n n );
+}
+
+
+
+// ==============================================================================
+// Ajaxify Flip
+// ==============================================================================
+form[action="/cart/add"],
+form[action^="/cart/add"] {
+  @include clearfix;
+}
+
+.flip {
+  display: inline-block;
+  position: relative;
+  @include at-query($max, 480px){
+    display: block;
+  }
+}
+
+.flip-front,
+.flip-back {
+  transition: all 0.3s;
+  backface: hidden;
+  overflow: hidden;
+  vertical-align: middle;
+
+  position: relative;
+  z-index: 10;
+
+  &:focus {
+    outline: 0 none;
+  }
+}
+
+.flip-front {
+  transition: padding-right 0.1s;
+
+  .is-flipped & {
+    // opacity: 0;
+    // display: none;
+  }
+}
+
+.flip-back {
+  display: none;
+  opacity: 0;
+  text-align: center;
+  @include scut-margin( n 1rem 0 n );
+
+  @include at-query( $max, 480px ){
+    @include scut-margin( n 1rem 1rem n );
+  }
+
+  .is-flipped & {
+    // display: inline-block;
+    // opacity: 1;
+  }
+}
+
+// Backup for no transforms
+.no-transforms {
+  .flip-back {
+    display: none;
+  }
+
+  &.is-flipped {
+    .flip-back {
+      display: block;
+    }
+  }
+}
+
+.flip-extra {
+  display: inline-block;
+  opacity: 0;
+  visibility: hidden;
+  overflow: visible;
+  white-space: nowrap;
+  z-index: 5;
+  transition: opacity 450ms cubic-bezier(0.57,.06,.05,.95);
+  @include scut-margin( n n 2rem 0.75rem );
+
+  a{
+    display: inline-block;
+    @include scut-margin( n n n 0.75rem );
+    @include type( $font-one, $delta, $book, $case: 'up', $margin: false );
+    @include color( $black, $red );
+  }
+
+  @include at-query($max, 480px ){
+    @include scut-margin( n n n 0 );
+    display: block;
+    text-align: center;
+    span{
+      display: none;
+    }
+    a{
+      @include scut-margin( n n n 0 );
+    }
+  }
+
+  .is-flipped + & {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 650ms cubic-bezier(0.57, 0.06, 0.05, 0.95) 750ms;
+  }
+}
+
+.flip-cart {
+  display: inline-block;
+}
+
+.flip-checkout {
+  margin: 0;
+  @include button('dark');
+}
+
+
+
+// ==============================================================================
+// #Quantity Selectors
+// ==============================================================================
+.js-qty {
+  position: relative;
+  margin-bottom: 1em;
+  max-width: 100px;
+  overflow: visible;
+  backface-visibility: hidden;
+
+  input[type="text"] {
+    display: block;
+    background: none;
+    text-align: center;
+    width: auto;
+    margin: 0;
+  }
+}
+
+.js--qty-adjuster {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  padding: 3px 0;
+  width: 20px;
+  text-align: center;
+  overflow: hidden;
+
+  user-select:         none;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    background-color: $red;
+    color: $white;
+  }
+
+  &:active {
+    background-color: darken($red, 10%);
+  }
+}
+
+.js--add {
+  right: 0;
+  border-left: 1px solid $borderColorForm;
+}
+
+.js--minus {
+  left: 0;
+  border-right: 1px solid $borderColorForm;
+}
+
+
+// ==============================================================================
+// #Quantity Selectors in the Ajax Cart
+// Note: simplify this eventually
+// ==============================================================================
+.ajaxifyCart--qty {
+  @extend .js-qty;
+  @include scut-margin( 0.5rem n );
+  display: inline-block;
+
+  input[type="text"] {
+
+    .ajaxify-notouch & {
+      // border: 1px solid rgba(0,0,0,0);
+    }
+  }
+
+  .ajaxifyCart--is-loading & {
+    opacity: 0.25;
+    transition: none;
+  }
+}
+
+
+.ajaxifyCart--qty-adjuster {
+  @extend .js--qty-adjuster;
+
+  .ajaxifyCart--product:hover &,
+  .ajaxify-touch & {
+    opacity: 1;
+    transition: background-color 0.2s ease-out;
+  }
+
+  // Turn off animation on initial hover
+  .ajaxifyCart--product:hover &:hover {
+    transition: none;
+  }
+}
+
+.ajaxifyCart--add {
+  @extend .js--add;
+}
+
+.ajaxifyCart--minus {
+  @extend .js--minus;
+}
+
+.ajaxifyCart--product input[type="text"],
+.ajaxifyCart--product:hover input[type="text"],
+.ajaxify-touch input[type="text"]{
+  color: $white;
+  background-color: lighten( $black, 5% );
+  border: 0;
+}
+
+// Quantity selector colors in the drawer
+.ajaxifyCart{
+
+  input[type="text"],
+  .js-add,
+  .js-minus{
+    opacity: 0.75;
+    color: $white;
+    background-color: lighten( $black, 5% );
+    border: 0;
+  }
+  .js--add {
+    right: 0;
+    border-left: 1px solid lighten( $black, 10% );;
+  }
+
+  .js--minus {
+    left: 0;
+    border-right: 1px solid lighten( $black, 10% );;
+  }
+
+  .ajaxifyCart--qty-adjuster {
+    opacity: 0.25;
+    color: $white;
+    &:hover,
+    &:active {
+      background-color: lighten( $black, 10% );
+    }
+  }
+}
+
+
+
+// ==============================================================================
+// Ajaxify Drawer
+// ==============================================================================
+#ajaxifyDrawer {
+  .update-cart {
+    display: none!important;
+  }
+}
+
+.ajaxifyCart{
+  // Note: since we are clipping by 2rem to hide scrollbars,
+  // we need to have a padding right of 4rem to actually be 2rem.
+  @include scut-padding( n 4rem n 2.875rem );
+
+  &--empty{
+    @include type( $font-one, $gamma, $book, $case: 'up', $margin: false );
+    color: $white;
+  }
+
+  &--product{
+    position: relative;
+    @include scut-clearfix();
+    @include scut-margin( n n 2rem n );
+    @extend .media;
+  }
+
+  &--remove{
+    display: inline-block;
+    @include scut-center-transform(y);
+    @include scut-absolute( n n n -1.5rem );
+    @include type( $font-one, $gamma, $book, $margin: false );
+    @include color( $grey, $white );
+  }
+
+  &--product-image{
+    @extend .media-img;
+  }
+
+  &--product-link{
+    @include type( $font-one, $delta, $book, $margin: false );
+    @include color( $white, $red );
+  }
+
+  &--product-variant{
+    @include type( $font-one, $epsilon, $light, $margin: false );
+    color: $grey;
+    @include scut-margin( n n 0 n );
+  }
+
+  &--product-price{
+    @include type( $font-one, $delta, $book, $margin: false );
+    @include scut-margin( n n 0 n );
+    color: $white;
+  }
+
+  &--checkout{
+    @include scut-margin( 3rem n n n );
+  }
+
+  &--subtotal{
+    display: block;
+    @include type( $font-one, $gamma, $book, $case: 'up' );
+    @include scut-margin( n n 1rem n  );
+    color: $white;
+  }
+
+}
+
+
+
+
