@@ -9,12 +9,10 @@
 
 var app = {
 
-  config:{
-    awsURL: 'http://s3-us-west-1.amazonaws.com/breezy-excursion/',
-
+  cache:{
+    awsURL: 'http://s3.amazonaws.com/callina/',
     $content: $('#content'),
     template: $('#content').data( "template" ),
-    title: $('#content').data( "title" ),
     debug: true
   },
 
@@ -31,7 +29,7 @@ var app = {
     // Initialize Desktop Only Scripts
     var mobile = isMobile.any();
     if( mobile === false ){
-       // pjaxify.init();
+
     }
 
     // Initialize Global Scripts
@@ -66,9 +64,9 @@ var app = {
   update: function(){
     // Update location from pJax Load
     /////////////////////////////////////////////////////////////////////////////
-    this.config.$content = $('#content');
-    this.config.template = $('#content').data( "template" );
-    this.config.title = $('#content').data( "title" );
+    this.cache.$content = $('#content');
+    this.cache.template = $('#content').data( "template" );
+    this.cache.title = $('#content').data( "title" );
 
     // Global Update Scripts
     /////////////////////////////////////////////////////////////////////////////
@@ -77,27 +75,27 @@ var app = {
     // Initialize Page-Conditional Scripts
     /////////////////////////////////////////////////////////////////////////////
     // Index Page
-    if ( app.config.template === 'index') {
+    if ( app.cache.template === 'index') {
       //index.init();
     }
     // Collection Page
-    if ( app.config.template === 'collection' ) {
+    if ( app.cache.template === 'collection' ) {
       //collection.init();
     }
     // Product Pages
-    if ( app.config.template === 'product' ) {
+    if ( app.cache.template === 'product' ) {
      // product.init();
     }
     // Blog
-    if ( app.config.template === 'blog' || app.config.template === 'article' ) {
+    if ( app.cache.template === 'blog' || app.cache.template === 'article' ) {
       //blog.init();
     }
     // Search
-    if ( app.config.template === 'search' ) {
+    if ( app.cache.template === 'search' ) {
       //search.init();
     }
     // Page
-    if ( app.config.template === 'page' ) {
+    if ( app.cache.template === 'page' ) {
       //page.init();
     }
 
@@ -110,13 +108,13 @@ var app = {
     resize.update();
 
     // Trace App Operations
-    app.debug('template: ' + this.config.template + ', title: ' + this.config.title );
+    app.debug('template: ' + this.cache.template + ', title: ' + this.cache.title );
     app.debug('app.update');
 
   },
 
   debug: function( test ){
-    if( app.config.debug === true ){
+    if( app.cache.debug === true ){
         console.log( test );
     }
   }

@@ -8,21 +8,18 @@ var backToTop = {
 
   // Set up Variables / Reference Elements
   /////////////////////////////////////////////////////////////////////////////
-  config:{
-
+  cache:{
+   // $element; $('.back-to-top'),
   },
 
   init: function(){
-    // Cache DOM elements
-    this.config.$element = $('.back-to-top');
-
     this.bindUIActions();
   },
 
   // Add Event Handlers
   /////////////////////////////////////////////////////////////////////////////
   bindUIActions: function() {
-    this.config.$element.on("click", function(e) {
+    this.cache.$element.on("click", function(e) {
       backToTop.scrollToTop();
     });
   },
@@ -30,6 +27,7 @@ var backToTop = {
   // Handle Scroll
   /////////////////////////////////////////////////////////////////////////////
   scrollToTop: function(){
+    // replace with velocity
     $("html,body").animate({ scrollTop: 0 }, "fast");
     return false;
   }

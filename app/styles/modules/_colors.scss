@@ -7,51 +7,55 @@
 // Colors by Name
 ///////////////////////////////////////////////////////////////////////////////
 $white: #ffffff;
-$black: #2e2d2d;
+$black: #231f20;
 $blackFull: #000;
-$red: #ec1e24;
-$grey: #878787;
-$lightgrey: #d5d1d1;
+$lightGrey: #e1e1e1;
+$grey: #939799;
+$darkGrey: darken( $grey, 10% );
+$blue: #183249;
+$lightBlue: #56dbef;
+$alert: $lightBlue;
+
 
 
 // Globals
 ///////////////////////////////////////////////////////////////////////////////
 
 /* Global colors */
-$colorText: $black;
-$colorTextLight: $grey;
-$colorTextDark: $black;
-$colorActive: $red;
-$colorHeaders: $black;
+$colorText: $grey;
+$colorTextLight: $lightGrey;
+$colorTextDark: $darkGrey;
+$colorActive: $lightBlue;
+$colorHeaders: $grey;
 
 /* Backgrounds */
 $colorBody: $white;
-$colorNavBg: $black;
-$colorFooterBg: $black;
+$colorNavBg: $blue;
+$colorFooterBg: $white;
 
 // Main Nav
-$colorNav: $white;
-$colorNavHover: darken( $white, 15% );
-$colorSubNav: $lightgrey;
-$colorSubNavHover: lighten( $lightgrey, 15% );
+$colorNav: $grey;
+$colorNavHover: $blue;
+$colorSubNav: $lightGrey;
+$colorSubNavHover: $white;
 
 /* Text link colors */
-$colorLink: $black;
-$colorLinkHover: lighten( $black, 10% );
+$colorLink: $grey;
+$colorLinkHover: $darkGrey;
 
 /* Button colors */
 // In _buttons.scss
 
 /* Border colors */
-$borderColor: $red;
-$borderColorForm: $lightgrey;
+$borderColor: $grey;
+$borderColorForm: $lightGrey;
 
 /* Helper colors */
-$disabledGrey: $grey;
-$disabledBorder: darken($disabledGrey, 25%);
-$errorRed: $red;
-$errorRedBg: lighten($errorRed, 55%);
-$successGreen: $black;
+$disabled: $grey;
+$disabledBorder: darken( $disabled, 25%);
+$error: $alert;
+$errorBg: lighten($alert, 55%);
+$success: $blue;
 
 
 // Color Mixin

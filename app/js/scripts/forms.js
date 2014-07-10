@@ -11,9 +11,9 @@ var forms = {
     this.validate();
   },
 
+  // Set up Variables / Reference Elements
+  ///////////////////////////////////////////////////////////////////////////
   placeHolders: function(){
-    // Set up Variables / Reference Elements
-    ///////////////////////////////////////////////////////////////////////////
     $('[placeholder]').each(function(){
       if ($(this).val() === '') {
         var hint = $(this).attr('placeholder');

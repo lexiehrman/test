@@ -40,17 +40,8 @@ $pushTime: 0.1s;
 }
 
 
-// Loaders
+// CSS Loader
 ///////////////////////////////////////////////////////////////////////////////
-%bgloader,
-.bgloader{
-  background-image: url( $data-loader-white );
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-
-// Css Element Loader
 .css-loader {
   $color1: $grey;
   $color2: $black;

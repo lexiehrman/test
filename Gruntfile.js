@@ -137,7 +137,7 @@ module.exports = function(grunt){
             expand: true,
             cwd: 'app/styles/',
             src: ['*.scss'],
-            dest: '../../.tmp/',
+            dest: '././.tmp/',
             ext: '.css'
           }]
         }
@@ -149,25 +149,22 @@ module.exports = function(grunt){
         options: {
           browsers: ['last 2 versions',"Android 4", '> 3%', 'Firefox ESR', 'Opera 12.1']
         },
-        dist: {
-          files: {
-            src: '.tmp/*.css'
-          }
-        }
+        files: {
+          expand: true,
+          flatten: true,
+          src: '.tmp/*.css', // -> src/css/file1.css, src/css/file2.css
+          dest: '.tmp/' // -> dest/css/file1.css, dest/css/file2.css
+        },
       },
 
       // CLEAN & OPTIMIZE CSS
       //////////////////////////////////////////////////////////////////////////
       csso: {
-        dist: {
+        main: {
           files: {
-            expand: true,
-            cwd: '.tmp/',
-            src: ['*.css', '!*.min.css'],
-            dest: 'theme/assets/',
-            ext: '.css.liquid'
+            'theme/assets/style.css': ['.tmp/style.css']
           }
-        }
+        },
       },
 
 

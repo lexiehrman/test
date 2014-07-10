@@ -7,7 +7,6 @@
 .breadcrumb{
   display: inline-block;
   height: 34px;
-  background: $black;
   vertical-align: top;
   @include scut-padding( 10px 0.625rem ); // magic numbers to lock in spacing
   @include type($font-one, $gamma, $book, $case: 'up', $margin: false );
@@ -19,7 +18,7 @@
     @include type($font-one, $gamma, $bold, $case: 'up', $margin: false );
   }
   a{
-    @include color($white, $red );
+    @include color($colorText, $colorActive );
   }
   i{
     display: inline-block;

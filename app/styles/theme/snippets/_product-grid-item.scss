@@ -11,7 +11,7 @@
   @extend %large--one-third;
 
   &:hover a{
-    color: $red;
+    color: $colorActive;
   }
 
   &__imagelink{
@@ -43,7 +43,7 @@
     display: block;
     @include type( $font-one, $gamma, $bold, $case: 'up', $margin: false);
     @include scut-margin( n n 0.75rem n );
-    @include color( $black, $red );
+    @include color( $black, $colorActive );
     transition: $time;
   }
 

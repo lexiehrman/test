@@ -17,11 +17,12 @@ $breakpoints: (
   'small' '(max-width: #{$small})',
   'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
   'medium-down' '(max-width: #{$medium})',
+  'medium-up' '(min-width: #{$medium})',
   'large' '(min-width: #{$large})'
 );
-$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large');
-$breakpoint-has-push:  ('small', 'medium', 'medium-down', 'large');
-$breakpoint-has-pull:  ('small', 'medium', 'medium-down', 'large');
+$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'medium-up', 'large');
+$breakpoint-has-push:  ('small', 'medium', 'medium-down', 'medium-up', 'large');
+$breakpoint-has-pull:  ('small', 'medium', 'medium-down','medium-up', 'large');
 
 
 /* Width variables */

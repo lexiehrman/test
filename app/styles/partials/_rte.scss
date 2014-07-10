@@ -12,7 +12,7 @@
   }
 
   a{
-    @include color( $grey, $red );
+    // @include color( $grey, $red );
   }
 
   strong{
@@ -29,11 +29,7 @@
     @include scut-margin( n n 1.75rem n);
   }
 
-  // helper classes
-  .red{
-    color: $red;
-  }
-
+  // Helper Classes
   .uppercase{
     text-transform: uppercase;
   }
@@ -45,13 +41,12 @@
   .pull-quote{
     &:before,
     &:after{
-      color: $red;
+
     }
     p{
       text-align: center;
       @include type( $base-font-family, $mega, $bold, $case: 'up' );
       line-height: 1;
-      color:$red;
     }
   }
 

@@ -48,7 +48,7 @@ form[action^="/cart/add"] {
 .flip {
   display: inline-block;
   position: relative;
-  @include at-query($max, 480px){
+  @include break($max, 480px){
     display: block;
   }
 }
@@ -83,7 +83,7 @@ form[action^="/cart/add"] {
   text-align: center;
   @include scut-margin( n 1rem 0 n );
 
-  @include at-query( $max, 480px ){
+  @include break( $max, 480px ){
     @include scut-margin( n 1rem 1rem n );
   }
 
@@ -120,10 +120,10 @@ form[action^="/cart/add"] {
     display: inline-block;
     @include scut-margin( n n n 0.75rem );
     @include type( $font-one, $delta, $book, $case: 'up', $margin: false );
-    @include color( $black, $red );
+    @include color( $colorText, $colorActive );
   }
 
-  @include at-query($max, 480px ){
+  @include break($max, 480px ){
     @include scut-margin( n n n 0 );
     display: block;
     text-align: center;
@@ -187,12 +187,12 @@ form[action^="/cart/add"] {
   transition: all 0.2s ease-out;
 
   &:hover {
-    background-color: $red;
+   // background-color: $red;
     color: $white;
   }
 
   &:active {
-    background-color: darken($red, 10%);
+    //background-color: darken($red, 10%);
   }
 }
 
@@ -334,7 +334,7 @@ form[action^="/cart/add"] {
 
   &--product-link{
     @include type( $font-one, $delta, $book, $margin: false );
-    @include color( $white, $red );
+    @include color( $white, $colorActive );
   }
 
   &--product-variant{

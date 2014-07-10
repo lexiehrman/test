@@ -4,6 +4,70 @@
 // --------------------------------------------------------------------------//
 ///////////////////////////////////////////////////////////////////////////////
 
+// Main Navigation
+///////////////////////////////////////////////////////////////////////////////
+.nav{
 
+  $navHeight: 5.25rem;
+  $navOffset: -$navHeight;
+
+  position: relative;
+  height: $navHeight * 2;
+  margin-top: $navOffset;
+  transition: $time;
+
+  &.open{
+    margin-top: 0;
+  }
+
+  // Main Nav
+  &__items{
+    @include scut-absolute( n n 0 n );
+    width: 100%;
+    height: $navHeight;
+    list-style-type: none;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__item{
+    display: inline-block;
+    @include scut-margin( n 1rem n n );
+  }
+
+  &__link{
+    @include color( $colorText, $colorActive );
+  }
+
+  // Sub Nav
+  &__subitems{
+    @include scut-absolute( $navOffset n n 0 );
+    height: $navHeight;
+    width: 100%;
+    background: $blue;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $time;
+    .open &{
+
+    }
+  }
+
+
+
+  &__subitem{
+    display: inline-block;
+    @include scut-margin( n 1rem n n );
+  }
+
+  &__sublink{
+    @include color( $grey, $white );
+  }
+
+}
 
 

@@ -1,17 +1,14 @@
 var resize = {
 
-  config: {
-
+  cache: {
+    winWidth: $(window).width(),
+    winHeight: $(window).height(),
+    small: 480,
+    medium: 768,
+    large: 1024,
   },
 
   init: function(){
-
-    resize.config.winWidth = $(window).width();
-    resize.config.winHeight = $(window).height();
-    resize.config.small = 480;
-    resize.config.medium = 768;
-    resize.config.large = 1024;
-
     var resizeTimer;
 
     // Throttle Resize event
@@ -25,15 +22,15 @@ var resize = {
   update: function(){
 
     // Global Updates
-    resize.config.winWidth = $(window).width();
-    resize.config.winHeight = $(window).height();
+    resize.cache.winWidth = $(window).width();
+    resize.cache.winHeight = $(window).height();
 
     // Template Specific Updates
-    if ( app.config.template === 'index') {
+    if ( app.cache.template === 'index') {
 
     }
 
-    if ( app.config.template === 'product') {
+    if ( app.cache.template === 'product') {
       product.relatedInfo();
     }
 

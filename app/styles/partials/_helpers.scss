@@ -4,12 +4,6 @@
 // --------------------------------------------------------------------------//
 ///////////////////////////////////////////////////////////////////////////////
 
-$header-height: 55px;
-
-%container{
-  //@include scut-margin( n $col-width n $col-width );
-}
-
 %vertical-align {
   position: relative;
   top: 50%;

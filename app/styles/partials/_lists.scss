@@ -28,26 +28,3 @@ ul, ol {
   }
 }
 
-// Definition Lists
-dl{
-  line-height: $line-height;
-  margin-bottom: ($line-height / 2)+'rem';
-
-  dt{
-    display: block;
-    @include type($font-one, $beta, $book, $margin: false);
-  }
-
-  dd{
-    display: block;
-    @include type($font-one, $delta, $light, $margin: false);
-  }
-
-  dd ~ dt{
-    @include scut-margin( 1.75rem n n n );
-  }
-
-  dd:last-child{
-    @include scut-margin( n n 1.75rem n );
-  }
-}

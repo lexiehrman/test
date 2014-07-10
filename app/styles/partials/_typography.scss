@@ -19,8 +19,8 @@
 
 // Typefaces
 ///////////////////////////////////////////////////////////////////////////////
-$font-one: 'mission_gothic', sans-serif;
-$font-two: 'Bevan', serif;
+$font-one: "futura-pt",sans-serif;
+$font-two: $font-one;
 $base-font-family: $font-one;
 
 
@@ -36,19 +36,19 @@ $type-scale-unit-value: rem;
 
 // Type Scale
 ///////////////////////////////////////////////////////////////////////////////
-// Modular Scale -----------  16px @ 1:1.333   24px @ 1:1.333  --------------//
-$ultra  : 65;
-$tera   : 54;
-$giga   : 38;
-$mega   : 28;
-$alpha  : 21;
-$beta   : 18;
-$gamma  : 16;
+// Modular Scale -----------  14px @ 1:1.2   18px @ 1:1.2   --------------//
+$ultra  : 53.748;
+$tera   : 41.803;
+$giga   : 31.104;
+$mega   : 21.60;
+$alpha  : 18;
+$beta   : 16.8;
+$gamma  : 15;
 $delta  : 14;
-$epsilon: 12;
-$zeta   : 11;
-$mini   : 10;
-$tiny   : 9;
+$epsilon: 12.5;
+$zeta   : 11.667;
+$mini   : 10.417;
+$tiny   : 9.723;
 
 $small-print-size: 65%;
 

@@ -26,7 +26,6 @@
 @import "partials/lists";
 @import "partials/forms";
 @import "partials/tables";
-@import "partials/flashes";
 @import "partials/rte";
 @import "partials/helpers";
 @import "partials/product-grids";
@@ -36,7 +35,6 @@
 // VENDOR
 ///////////////////////////////////////////////////////////////////
 @import "vendor/fluidbox";
-@import "vendor/pace";
 
 
 // LAYOUTS
@@ -61,7 +59,5 @@
 @import "theme/templates/cart";
 @import "theme/templates/blog";
 @import "theme/templates/page";
-@import "theme/templates/page.lookbook";
-@import "theme/templates/page.about";
 
 
