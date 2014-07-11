@@ -4,7 +4,7 @@
 // ==============================================================================
 $viewportIncrement: 1px;
 
-$small: 480px;
+$small: 320px;
 $medium: 1024px;
 $large: 1025px;
 
@@ -14,7 +14,7 @@ $preLarge: $large - $viewportIncrement;
 
 /* The following are dependencies of csswizardry grid */
 $breakpoints: (
-  'small' '(max-width: #{$small})',
+  'small' '(min-width: #{$small})',
   'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
   'medium-down' '(max-width: #{$medium})',
   'medium-up' '(min-width: #{$medium})',

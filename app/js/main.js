@@ -7921,13 +7921,52 @@ var header = {
 
   mainNav: function(){
 
-    $('.nav').on( 'click', '.nav__item--has-subnav', function(){
-      if( !$('.nav').hasClass('open') ){
-        $('.nav').addClass('open')
+    // If we load a page with an active which has a subnav, open the subnav
+    if ($('.nav__item--open').length ) {
+      $('#header').addClass('open')
+      $('.nav__item--open').find('.nav__subitems').addClass('show');
+    }
+
+    // Delegate click functions based on state
+    $('.nav__item--has-subnav > a').on( 'click', function(event){
+
+      event.preventDefault();
+
+      var $item = $(this).parent();
+
+      if( $('body').hasClass('small') ){
+        mobileClick( $item );
       } else {
-        $('.nav').removeClass('open')
+        desktopClick( $item );
       }
+
     });
+
+    // Handle a Desktop Click
+    function desktopClick( $item ){
+      app.debug('desktop click');
+
+      // Menu Already Open
+      if( !$('#header').hasClass('open') ){
+        $('#header').addClass('open');
+        $('.nav__subitems').removeClass('show');
+        $item.children(":first").addClass("active");
+        $item.find('.nav__subitems').addClass('show');
+      } else {
+        $('#header').removeClass('open');
+      }
+
+    }
+
+    // Handle a Mobile Click
+    function mobileClick( $item ){
+      app.debug('mobile click');
+    }
+
+    // Track Active state of Main Nav
+    function setActiveLink( $item ){
+
+    }
 
 
   }
@@ -7963,7 +8002,7 @@ var isMobile = {
   cache: {
     winWidth: $(window).width(),
     winHeight: $(window).height(),
-    small: 480,
+    small: 320,
     medium: 768,
     large: 1024,
   },
@@ -7985,17 +8024,28 @@ var isMobile = {
     resize.cache.winWidth = $(window).width();
     resize.cache.winHeight = $(window).height();
 
+    // Add classes to body based on width
+    resize.responsiveClasses( resize.cache.winWidth );
+
     // Template Specific Updates
     if ( app.cache.template === 'index') {
 
     }
 
     if ( app.cache.template === 'product') {
-      product.relatedInfo();
+
     }
 
     // Track document progress
     app.debug('resized!');
+  },
+
+  responsiveClasses: function( width ){
+    var newClass =  width >= resize.cache.large ? 'large' :
+                    width >= resize.cache.medium ? 'medium' :
+                    width >= resize.cache.small ? 'small' : '';
+
+    $(document.body).removeClass('small medium large').addClass(newClass);
   }
 
 };

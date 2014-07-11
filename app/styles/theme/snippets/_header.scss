@@ -4,70 +4,210 @@
 // --------------------------------------------------------------------------//
 ///////////////////////////////////////////////////////////////////////////////
 
-// Main Navigation
+// Main Navigation - Desktop
 ///////////////////////////////////////////////////////////////////////////////
-.nav{
+body.medium .header,
+body.large .header{
 
   $navHeight: 5.25rem;
   $navOffset: -$navHeight;
 
   position: relative;
-  height: $navHeight * 2;
-  margin-top: $navOffset;
+  height: $navHeight;
+  background: white;
   transition: $time;
 
   &.open{
-    margin-top: 0;
+    height: $navHeight * 2;
   }
 
-  // Main Nav
-  &__items{
-    @include scut-absolute( n n 0 n );
-    width: 100%;
+  .menu-toggle{
+    display: none;
+  }
+
+  .logo{
+    @include scut-absolute( n n 0 0 );
+    @include scut-margin( n n n 2rem );
     height: $navHeight;
-    list-style-type: none;
-    background: white;
+    display: flex;
+    align-items: center;
+    z-index:10;
+  }
+
+  .cart-icon{
+    @include scut-absolute( n 0 0 n );
+    @include scut-margin( n 2rem n n );
+    height: $navHeight;
+    display: flex;
+    align-items: center;
+    z-index:10;
+  }
+
+  .nav{
+    @include scut-absolute( n n 0 n );
+    height: $navHeight;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-  }
-
-  &__item{
-    display: inline-block;
-    @include scut-margin( n 1rem n n );
-  }
-
-  &__link{
-    @include color( $colorText, $colorActive );
-  }
-
-  // Sub Nav
-  &__subitems{
-    @include scut-absolute( $navOffset n n 0 );
-    height: $navHeight;
-    width: 100%;
-    background: $blue;
-    list-style-type: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: $time;
-    .open &{
 
+    // Main Nav
+    &__items{
+      @include scut-margin( n 3.5rem n n );
     }
+
+    &__item{
+      display: inline-block;
+      @include scut-margin( n 1.5rem n n );
+    }
+
+    &__link{
+      @include type( $font-one, $epsilon, $book, $case: 'up' );
+      @include color( $colorText, $colorActive );
+      &.active{
+        color: $colorActive;
+      }
+    }
+
+    // Sub Nav
+    &__subitems{
+      @include scut-absolute( $navOffset n n 0 );
+      height: $navHeight;
+      width: 100%;
+      background: $blue;
+      list-style-type: none;
+      display: none;
+      z-index: 100;
+      transition: height $time;
+
+      &.show{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &__subitem{
+      display: inline-block;
+      @include scut-margin( n 1.5rem n n );
+    }
+
+    &__sublink{
+      @include type( $font-one, $delta, $book, $margin: false );
+      text-transform: lowercase;
+      @include color( $grey, $white );
+
+      &.active{
+        color: $white;
+      }
+    }
+
   }
-
-
-
-  &__subitem{
-    display: inline-block;
-    @include scut-margin( n 1rem n n );
-  }
-
-  &__sublink{
-    @include color( $grey, $white );
-  }
-
 }
 
 
+// Main Navigation - Mobile
+///////////////////////////////////////////////////////////////////////////////
+body.small .header{
+
+  $navHeight: 4rem;
+  $navOffset: -$navHeight;
+
+  position: relative;
+  height: auto;
+  background: white;
+  text-align: center;
+  transition: $time;
+
+  .menu-toggle{
+    @include scut-absolute( n n 0 1rem );
+    height: $navHeight;
+    display: flex;
+    align-items: center;
+    z-index:10;
+  }
+
+  .logo{
+    height: $navHeight;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg{
+      transform: scale(.9);
+    }
+  }
+
+  .cart-icon{
+    @include scut-absolute( n 1rem 0 n );
+    height: $navHeight;
+    display: flex;
+    align-items: center;
+    z-index:10;
+  }
+
+  .nav{
+    width: 100%;
+    background: $blue;
+    text-align: left;
+    transition: $time;
+
+    // Main Nav
+    &__items{
+      @include scut-padding( 1.5rem n );
+    }
+
+    &__item{
+      position: relative;
+      display: block;
+
+      &--has-subnav:before{
+        content: '+';
+        height: 2rem;
+        @include scut-absolute( 0.7rem n n 1.5rem );
+        @include type( $font-one, $gamma, $book, $case: 'up', $margin: false );
+        @include color( $colorText, $colorActive );
+      }
+
+      &--open:before{
+        content: $scut-ndash;
+        @include scut-absolute( 0.6rem n n 1.5rem );
+      }
+    }
+
+    &__link{
+      display: inline-block;
+      @include type( $font-one, $gamma, $book, $case: 'up', $margin: false );
+      @include scut-padding( 0.75rem 3.25rem );
+      @include color( $colorText, $colorActive );
+
+      &.active{
+        color: $colorActive;
+      }
+    }
+
+    // Sub Nav
+    &__subitems{
+      width: 100%;
+      list-style-type: none;
+      transition: height $time;
+    }
+
+    &__subitem{
+      display: block;
+    }
+
+    &__sublink{
+      display: inline-block;
+      @include type( $font-one, $gamma, $book, $margin: false );
+      text-transform: lowercase;
+      @include scut-padding( 0.75rem 3.25rem );
+      @include color( $colorText, $colorActive );
+
+      &.active{
+        color: $colorActive;
+      }
+    }
+
+  }
+}
