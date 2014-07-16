@@ -11,11 +11,12 @@ body.large .header{
 
   $navHeight: 5.25rem;
   $navOffset: -$navHeight;
+  $openTime: $time;
 
   position: relative;
   height: $navHeight;
   background: white;
-  transition: $time;
+  transition: height $openTime ease-out;
 
   &.open{
     height: $navHeight * 2;
@@ -38,9 +39,16 @@ body.large .header{
     @include scut-absolute( n 0 0 n );
     @include scut-margin( n 2rem n n );
     height: $navHeight;
+    cursor: pointer;
     display: flex;
     align-items: center;
     z-index:10;
+    path{
+      transition: $time;
+      &:hover{
+        fill: $colorActive;
+      }
+    }
   }
 
   .nav{
@@ -63,34 +71,69 @@ body.large .header{
     }
 
     &__link{
+      position: relative;
       @include type( $font-one, $epsilon, $book, $case: 'up' );
       @include color( $colorText, $colorActive );
       &.active{
         color: $colorActive;
       }
+      &.highlight{
+        color: $colorSpot1;
+      }
+      // Underline
+      &::after {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: rgba($bluegrey, 0.5);
+        content: '';
+        opacity: 0;
+        transition: opacity $time, transform $time;
+        transform: translateY(10px);
+      }
+      &.active::after,
+      &:hover::after,
+      &:focus::after {
+        opacity: 1;
+        transform: translateY(5px);
+      }
     }
 
     // Sub Nav
     &__subitems{
-      @include scut-absolute( $navOffset n n 0 );
+      @include scut-absolute( $navOffset*2 n n 0 );
       height: $navHeight;
       width: 100%;
       background: $blue;
-      list-style-type: none;
-      display: none;
       z-index: 100;
-      transition: height $time;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: position 0s;
 
       &.show{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include scut-absolute( $navOffset n n 0 );
       }
     }
 
     &__subitem{
+      position: relative;
       display: inline-block;
       @include scut-margin( n 1.5rem n n );
+      top: 10px;
+      opacity: 0;
+      transition: $time*1.5;
+    }
+    @for $i from 1 through 10 {
+      &__subitem:nth-child(#{$i}) {
+        transition-delay:(#{$i*0.02s+0.1s});
+      }
+    }
+    .show .nav__subitem{
+      top:0px;
+      opacity: 1;
     }
 
     &__sublink{
@@ -105,6 +148,7 @@ body.large .header{
 
   }
 }
+
 
 
 // Main Navigation - Mobile
@@ -126,6 +170,47 @@ body.small .header{
     display: flex;
     align-items: center;
     z-index:10;
+    cursor: pointer;
+
+    .menu-icon-bg{
+      transition: $time;
+    }
+    &:hover .menu-icon-bg{
+      //fill: darken( $red, 5% );
+    }
+
+    // Closed Menu State
+    .menu-line-top,
+    .menu-line-bottom{
+      fill-opacity: 1;
+      transition: $time;
+    }
+    .menu-line-middle-a,
+    .menu-line-middle-b{
+      transform-origin: 50% 50%;
+      transform: rotate(0.01deg) scaleX(1);
+      transition: $time;
+    }
+    .menu-line-correct{
+      transform: translate(17.5px, 17px);
+    }
+    .menu-line-anticorrect{
+      transform: translate(-17.5px, -17px);
+    }
+
+    &.active{
+      // Open Menu State
+      .menu-line-top,
+      .menu-line-bottom{
+        fill-opacity: 0;
+      }
+      .menu-line-middle-a{
+        transform: rotate(45deg) scaleX(1.25);
+      }
+      .menu-line-middle-b{
+        transform: rotate(-45deg) scaleX(1.25);
+      }
+    }
   }
 
   .logo{
@@ -148,9 +233,15 @@ body.small .header{
 
   .nav{
     width: 100%;
+    max-height: 0;
+    overflow: hidden;
     background: $blue;
     text-align: left;
     transition: $time;
+
+    &.open{
+      max-height: 30rem;
+    }
 
     // Main Nav
     &__items{
@@ -161,22 +252,24 @@ body.small .header{
       position: relative;
       display: block;
 
-      &--has-subnav:before{
+      // The following two are the + and -
+      &--has-subnav > a:before{
         content: '+';
         height: 2rem;
         @include scut-absolute( 0.7rem n n 1.5rem );
         @include type( $font-one, $gamma, $book, $case: 'up', $margin: false );
         @include color( $colorText, $colorActive );
       }
-
-      &--open:before{
+      &--open > a:before,
+      & > a.highlight:before,
+      & > a.active:before{
         content: $scut-ndash;
         @include scut-absolute( 0.6rem n n 1.5rem );
       }
     }
 
     &__link{
-      display: inline-block;
+      display: block;
       @include type( $font-one, $gamma, $book, $case: 'up', $margin: false );
       @include scut-padding( 0.75rem 3.25rem );
       @include color( $colorText, $colorActive );
@@ -186,11 +279,20 @@ body.small .header{
       }
     }
 
+
     // Sub Nav
     &__subitems{
       width: 100%;
+      @include scut-margin( n n 0 n );
+      max-height: 0;
+      overflow: hidden;
       list-style-type: none;
-      transition: height $time;
+      transition: max-height $time;
+
+      &.show{
+        max-height: 20rem;
+        @include scut-margin( n n 1rem n );
+      }
     }
 
     &__subitem{
@@ -198,7 +300,7 @@ body.small .header{
     }
 
     &__sublink{
-      display: inline-block;
+      display: block;
       @include type( $font-one, $gamma, $book, $margin: false );
       text-transform: lowercase;
       @include scut-padding( 0.75rem 3.25rem );
@@ -210,4 +312,10 @@ body.small .header{
     }
 
   }
+}
+
+// Mobile Menu Toggle & Animation
+///////////////////////////////////////////////////////////////////////////////
+.menu-toggle{
+
 }

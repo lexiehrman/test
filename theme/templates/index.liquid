@@ -5,8 +5,9 @@
 {% endcomment %}
 <div id="content" class="{{ template }}" data-template="{{ template }}" data-title="{{ page_title | handle }}">
 
-  <section class="slider">
-
+  <section class="slider slider--hero">
+    <div class="css-loader">Loading...</div>
+    <img class="slider__image" src="{{ 'img_homepage_hero.jpg' | asset_url }}" alt="Callina" onload="imgLoaded(this)">
   </slider>
 
 

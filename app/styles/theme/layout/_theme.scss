@@ -28,7 +28,6 @@ body{
 // Primary page wrapper
 .main{
   @include scut-relative();
-  transition: $pushTime ease-out;
   &.push{
     transform: translateX(20rem);
   }
