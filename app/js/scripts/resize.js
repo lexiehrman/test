@@ -1,6 +1,7 @@
 var resize = {
 
   cache: {
+    $body: $(document.body),
     winWidth: $(window).width(),
     winHeight: $(window).height(),
     small: 320,
@@ -46,7 +47,7 @@ var resize = {
                     width >= resize.cache.medium ? 'medium' :
                     width >= resize.cache.small ? 'small' : '';
 
-    $(document.body).removeClass('small medium large').addClass(newClass);
+    resize.cache.$body.removeClass('small medium large').addClass(newClass);
   }
 
 };

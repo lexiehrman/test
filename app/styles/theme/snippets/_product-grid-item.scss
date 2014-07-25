@@ -6,51 +6,119 @@
 
 .product-grid-item{
   @extend %grid-item;
-  //@extend %one-half;
-  @extend %medium--one-third;
-  @extend %large--one-third;
+  @extend %medium-up--one-third;
+  position: relative;
 
-  &:hover a{
-    color: $colorActive;
+  // Animate text on image hover on mobile
+  @include break($max, $small){
+    &:hover a{
+      color: $colorActive;
+    }
+  }
+
+  // Animate the text up on rollover on image hover
+  @include break($min, $small){
+    .no-touch &:hover a,
+    .no-touch &:hover span{
+      transform: translateY(0px);
+    }
   }
 
   &__imagelink{
     display: block;
-    @include scut-ratio-box;
+    @include scut-ratio-box(5/7, '.product-grid-item__image'); // 1000 x 1400
   }
 
   &__image{
-    @include scut-absolute( 0 n n 0 );
-    width: 100%;
-    max-width: 100%;
-    height: auto;
+    vertical-align: middle;
+    -webkit-backface-visibility: hidden;
     opacity: 0;
     transition: $time * 3;
+
     &.loaded{
       opacity: 1;
     }
   }
 
-
   &__info{
-    min-height: 7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include scut-padding( 1.5rem 1rem );
     text-align: center;
-    @include scut-margin( 1.5rem n );
-    @include scut-padding( n 1rem );
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+
+    // Not Mobile, Not Touch
+    @include break($min, $small){
+      .no-touch &{
+        @include scut-absolute( 0 0 0 0 );
+        background-color: $colorProductThumbnailOverlay;
+        opacity: 0;
+        transition: $time * 2;
+        &:hover{
+          opacity: 1;
+        }
+      }
+    }
   }
 
   &__title{
     display: block;
-    @include type( $font-one, $gamma, $bold, $case: 'up', $margin: false);
+    @include type( $font-one, $beta, $bold, $case: 'up', $margin: false);
     @include scut-margin( n n 0.75rem n );
-    @include color( $black, $colorActive );
-    transition: $time;
+    color: $medGrey;
+    transition: $time $easeOutSine;
+
+    // Not Mobile, Not Touch
+    @include break($min, $small ){
+      .no-touch &{
+        transform: translateY(0.75rem);
+        @include type( $font-one, $giga, $bold, $case: 'up' );
+        color: $white;
+      }
+    }
+
   }
 
   &__price{
     display: block;
-    @include type( $font-one, $delta, $book, $case: 'up');
-    color: $grey;
+    @include type( $font-one, $delta, $bold, $case: 'up', $margin: false);
+    color: $medGrey;
+    transition: $time $easeOutSine;
+
+    &--compare-at-price{
+      display: inline-block;
+      @include scut-margin( n 0.5rem n n );
+      text-decoration: line-through;
+      font: inherit;
+      opacity:0.75;
+    }
+
+    // Not Mobile, Not Touch
+    @include break($min, $small){
+      .no-touch &{
+        transform: translateY(0.5rem);
+        @include type( $font-one, $alpha, $bold, $case: 'up', $margin: false);
+        color: $white;
+      }
+    }
+  }
+
+  &__save{
+    @include type( $font-one, $epsilon, $book, $case: 'up', $margin: false);
+    color: $medGrey;
+    text-transform: uppercase;
+    transition: $time $easeOutSine;
+
+    // Not Mobile, Not Touch
+    @include break($min, $small){
+      .no-touch &{
+        transform: translateY(0.25rem);
+        @include type( $font-one, $epsilon, $book, $case: 'up', $margin: false);
+        color: $white;
+      }
+    }
   }
 
 

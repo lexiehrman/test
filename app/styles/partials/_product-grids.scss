@@ -9,5 +9,7 @@
 .product-grid{
   @extend %grid;
   @include scut-clearfix();
+  &--full{
+    @extend %grid--full;
+  }
 }
-

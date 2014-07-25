@@ -10,6 +10,7 @@ $white: #ffffff;
 $black: #231f20;
 $blackFull: #000;
 $lightGrey: #e1e1e1;
+$medGrey: #484343;
 $grey: #939799;
 $darkGrey: darken( $grey, 10% );
 $blue: #183249;
@@ -45,6 +46,9 @@ $colorSubNavHover: $white;
 /* Text link colors */
 $colorLink: $grey;
 $colorLinkHover: $darkGrey;
+
+// Product Thumbnail
+$colorProductThumbnailOverlay: rgba( $lightBlue, 0.5 );
 
 /* Button colors */
 // In _buttons.scss

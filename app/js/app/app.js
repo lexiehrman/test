@@ -101,11 +101,14 @@ var app = {
 
 
     //Shopify API
+    /////////////////////////////////////////////////////////////////////////////
     Shopify.getCart();
+
 
     // Layout Tweaks
     /////////////////////////////////////////////////////////////////////////////
     resize.update();
+
 
     // Trace App Operations
     app.debug('template: ' + this.cache.template + ', title: ' + this.cache.title );

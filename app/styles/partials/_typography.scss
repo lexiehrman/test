@@ -38,13 +38,13 @@ $type-scale-unit-value: rem;
 ///////////////////////////////////////////////////////////////////////////////
 // Modular Scale -----------  14px @ 1:1.2   18px @ 1:1.2   --------------//
 // http://modularscale.com/scale/?px1=14&px2=18&ra1=1.2&ra2=0
-$ultra  : 53.748;
-$tera   : 41.803;
-$giga   : 31.104;
-$mega   : 21.60;
-$alpha  : 18;
-$beta   : 16.8;
-$gamma  : 15;
+$ultra  : 64.498;
+$tera   : 53.748;
+$giga   : 41.803;
+$mega   : 31.104;
+$alpha  : 21.60;
+$beta   : 18;
+$gamma  : 16;
 $delta  : 14;
 $epsilon: 12.5;
 $zeta   : 11.667;
@@ -424,6 +424,9 @@ h5 {
 h6 {
   @extend %epsilon;
 }
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+.h1 a, .h2 a, .h3 a, .h4 a, .h5 a, .h6 a { font-weight: inherit; }
 
 // Parargraphs
 ///////////////////////////////////////////////////////////////////////////////

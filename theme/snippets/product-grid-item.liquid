@@ -6,7 +6,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 {% endcomment %}
 
-
 {% comment %}
 ///////////////////////////////////////////////////////////////////////////////
 // Check if on sale or sold out
@@ -33,15 +32,22 @@
     <div class="css-loader">Loading...</div>
     <img class="product-grid-item__image" width="100%" height="auto" itemprop="image" src= "{{ product.featured_image | product_img_url: 'grande' }}" alt= "{{ product.title | escape }}" onload="imgLoaded(this)">
   </a>
+
   <div class="product-grid-item__info">
-    <a itemprop="name" class="product-grid-item__title" href="{{ product.url | within: collection }}">{{ product.title }}</a>
-    {% if product.available %}
-      <span itemprop="price" class="product-grid-item__price">{{ product.price | money | remove: '.00' | replace: ' ', ''}}</span>
-      {% if on_sale %}
-        <s class="product-grid-item--compare-at-price">was {{ product.compare_at_price | money }}</s>
+    <div class="product-grid-item__center">
+      <a itemprop="name" class="product-grid-item__title" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+
+      {% if product.available %}
+        {% if on_sale %}
+          <span class="product-grid-item__price" itemprop="price"><s class="product-grid-item__price--compare-at-price">{{ product.compare_at_price | money | remove: '.00' | replace: ' ', '' }}</s> {{ product.price | money | remove: '.00' | replace: ' ', ''}}</span>
+          <span class="product-grid-item__save">Save {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0' }}%</span>
+        {% else %}
+          <span class="product-grid-item__price" itemprop="price">{{ product.price | money | remove: '.00' | replace: ' ', ''}}</span>
+        {% endif%}
+      {% else %}
+        <span class="product-grid-item__price product-grid-item__price--sold-out" itemprop="price">Sold Out</span>
       {% endif %}
-    {% else %}
-      <span itemprop="price" class="product-grid-item__price product-grid-item__price--sold-out">Sold Out</span>
-    {% endif %}
+    </div>
   </div>
+
 </div>

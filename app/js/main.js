@@ -8059,6 +8059,7 @@ var isMobile = {
 ;var resize = {
 
   cache: {
+    $body: $(document.body),
     winWidth: $(window).width(),
     winHeight: $(window).height(),
     small: 320,
@@ -8104,7 +8105,7 @@ var isMobile = {
                     width >= resize.cache.medium ? 'medium' :
                     width >= resize.cache.small ? 'small' : '';
 
-    $(document.body).removeClass('small medium large').addClass(newClass);
+    resize.cache.$body.removeClass('small medium large').addClass(newClass);
   }
 
 };
@@ -8211,11 +8212,14 @@ var app = {
 
 
     //Shopify API
+    /////////////////////////////////////////////////////////////////////////////
     Shopify.getCart();
+
 
     // Layout Tweaks
     /////////////////////////////////////////////////////////////////////////////
     resize.update();
+
 
     // Trace App Operations
     app.debug('template: ' + this.cache.template + ', title: ' + this.cache.title );

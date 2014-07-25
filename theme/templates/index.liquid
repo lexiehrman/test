@@ -5,10 +5,21 @@
 {% endcomment %}
 <div id="content" class="{{ template }}" data-template="{{ template }}" data-title="{{ page_title | handle }}">
 
+  {% comment %}
+  // Homepage Hero
+  {% endcomment %}
   <section class="slider slider--hero">
     <div class="css-loader">Loading...</div>
     <img class="slider__image" src="{{ 'img_homepage_hero.jpg' | asset_url }}" alt="Callina" onload="imgLoaded(this)">
-  </slider>
+  </section>
 
+  {% comment %}
+  // Homepage Product Grid
+  {% endcomment %}
+  <section class="product-grid product-grid--full">
+    {% for product in collections[settings.homepage_collection].products %}
+      {% include 'product-grid-item' %}
+    {% endfor %}
+  </section>
 
 </div>
