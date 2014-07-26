@@ -4,9 +4,110 @@
 // --------------------------------------------------------------------------//
 ///////////////////////////////////////////////////////////////////////////////
 
+
+// Index Hero
+///////////////////////////////////////////////////////////////////////////////
 .slider{
+  position: relative;
+
+  &__image-wrapper{
+    @include scut-ratio-box( 2/1, '.slider__image');
+  }
+
   &__image{
-    width: 100%;
     vertical-align: middle;
   }
+
+  &__copy-wrapper{
+    @extend %grid--full;
+    display: flex;
+    align-items: center;
+    @include scut-padding( 1rem n );
+    @include break($max, $small){
+      background: url( $data-texture-light-grey );
+    }
+    @include break( $min, $small ){
+      @include scut-absolute( 0 0 0 0 );
+    }
+
+  }
+
+  &__copy{
+    @extend %grid-item;
+    @extend %ten-twelfths;
+    @extend %push--one-twelfth;
+    text-align: left;
+
+    &--color1{
+      color: $white;
+    }
+
+    &--color2{
+      color: $black;
+    }
+
+    &--left{
+      text-align: left;
+    }
+
+    &--center{
+      text-align: center;
+    }
+
+    &--right{
+      text-align: right;
+    }
+
+    .small &{
+      text-align: center;
+    }
+  }
+
+  &__headline{
+    color: inherit;
+    @include type( $font-one, $alpha, $bold, $case: 'up' );
+
+    @include break( $min, $small ){
+      @include type( $font-one, $mega, $bold, $case: 'up' );
+    }
+
+    @include break( $min, $large ){
+      @include type( $font-one, $tera, $bold, $case: 'up' );
+    }
+
+  }
+
+  &__text{
+    width: 100%;
+    color: inherit;
+
+    @include break( $min, $small ){
+      width: 75%;
+    }
+
+    @include break( $min, $large ){
+      width: 50%;
+    }
+  }
+
+  &__btn{
+    @include button();
+  }
+
+}
+
+
+// Index Video
+///////////////////////////////////////////////////////////////////////////////
+.index-video{
+  @include scut-ratio-box(16/9, ".index-video-content");
+}
+
+.index-video-content{
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
 }

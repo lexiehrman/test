@@ -8,45 +8,25 @@
   <legend>HOMEPAGE FEATURE</legend>
   <table class="standard-table">
     <tr>
-      <td>Image Hold Duration</td>
-      <td>
-        <select name="homepage_feature_duration">
-          <option value="1000">1s</option>
-          <option value="2000">2s</option>
-          <option value="3000">3s</option>
-          <option value="5000" selected="selected">5s</option>
-          <option value="7000">7s</option>
-          <option value="10000">10s</option>
-          <option value="15000">15s</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td>Image Fade Speed</td>
-      <td>
-        <select name="homepage_feature_speed">
-          <option value="500">0.5s</option>
-          <option value="1000" selected="selected">1s</option>
-          <option value="1500">1.5s</option>
-          <option value="2000">2s</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td><label>Image 1( 1600x900 )</label></td>
+      <td><label>Image ( 1600x900 )</label></td>
       <td><input type="file" name="img_homepage_feature1.jpg" data-max-width="2048" /></td>
-    </tr>
-    <tr>
-      <td><label>Image 2( 1600x900 )</label></td>
-      <td><input type="file" name="img_homepage_feature2.jpg" data-max-width="2048" /></td>
     </tr>
     <tr>
       <td>Text Alignment</td>
       <td>
         <select name="homepage_feature_alignment">
-          <option value="feature-left">Left</option>
-          <option value="feature-center">Center</option>
-          <option value="feature-right" selected="selected">Right</option>
+          <option value="slider__copy--left">Left</option>
+          <option value="slider__copy--center">Center</option>
+          <option value="slider__copy--right" selected="selected">Right</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Text Color Style</td>
+      <td>
+        <select name="homepage_feature_color_style">
+          <option value="slider__copy--color1">Light</option>
+          <option value="slider__copy--color2">Dark</option>
         </select>
       </td>
     </tr>
@@ -55,30 +35,8 @@
       <td><input type="text" name="homepage_feature_headline" /></td>
     </tr>
     <tr>
-      <td>Feature Headline Color Style</td>
-      <td>
-        <select name="homepage_feature_headline_style">
-          <option value="feature-color1" selected="selected">Black Text, White BG</option>
-          <option value="feature-color2" >White Text, Black BG</option>
-          <option value="feature-color3">Black Text</option>
-          <option value="feature-color4">White Text</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
       <td>Feature Copy</td>
       <td><textarea rows="4" cols="20" name="homepage_feature_copy" class="textarea" value=""/></td>
-    </tr>
-    <tr>
-      <td>Feature Copy Color Style</td>
-      <td>
-        <select name="homepage_feature_copy_style">
-          <option value="feature-color1">Black Text, White BG</option>
-          <option value="feature-color2" selected="selected">White Text, Black BG</option>
-          <option value="feature-color3">Black Text</option>
-          <option value="feature-color4">White Text</option>
-        </select>
-      </td>
     </tr>
     <tr>
       <td>Feature Button Text</td>
@@ -92,8 +50,8 @@
       <td>Feature Button Color Style</td>
       <td>
         <select name="homepage_feature_button_style">
-          <option value="feature-button-dark">Dark Button</option>
-          <option value="feature-button-light" selected="selected">Light Button</option>
+          <option value="btn" selected="selected">Light</option>
+          <option value="btn--dark">Dark</option>
         </select>
       </td>
     </tr>
@@ -188,7 +146,7 @@
 
 <!-- HOMEPAGE PRODUCT GRID -->
 <fieldset>
-  <legend>HOMEPAGE PRODUCT GRIDS</legend>
+  <legend>HOMEPAGE PRODUCT GRID</legend>
   <table>
     <tr>
       <td><label>Collection</label></td>
@@ -199,7 +157,17 @@
       <td><input type="text" name="homepage_collection1_limit" /></td>
     </tr>
   </table>
+</fieldset>
 
+<!-- HOMEPAGE VIDEO -->
+<fieldset>
+  <legend>HOMEPAGE VIDEO</legend>
+  <table class="standard-table">
+    <tr>
+      <td>Homepage Video URL</td>
+      <td><input type="text" name="homepage_video_url" /></td>
+    </tr>
+  </table>
 </fieldset>
 
 

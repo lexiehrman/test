@@ -6,20 +6,51 @@
 <div id="content" class="{{ template }}" data-template="{{ template }}" data-title="{{ page_title | handle }}">
 
   {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
   // Homepage Hero
+  ///////////////////////////////////////////////////////////////////////////////
   {% endcomment %}
   <section class="slider slider--hero">
-    <div class="css-loader">Loading...</div>
-    <img class="slider__image" src="{{ 'img_homepage_hero.jpg' | asset_url }}" alt="Callina" onload="imgLoaded(this)">
+    <div class="slider__image-wrapper">
+      <div class="css-loader">Loading...</div>
+      <img class="slider__image" src="{{ 'img_homepage_hero.jpg' | asset_url }}" alt="Callina" onload="imgLoaded(this)">
+    </div>
+    <div class="slider__copy-wrapper">
+      <div class="slider__copy {{ settings.homepage_feature_color_style }} {{ settings.homepage_feature_alignment }}">
+        <h1 class="slider__headline">{{ settings.homepage_feature_headline }}</h1>
+        <p class="slider__text">{{ settings.homepage_feature_copy }}</p>
+        <a class="slider__btn {{ settings.homepage_feature_button_style }}" href="{{ settings.homepage_feature_link }}">{{ settings.homepage_feature_button }}</a>
+      </div>
+    </div>
   </section>
 
   {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
   // Homepage Product Grid
+  ///////////////////////////////////////////////////////////////////////////////
   {% endcomment %}
   <section class="product-grid product-grid--full">
-    {% for product in collections[settings.homepage_collection].products %}
+    {% for product in collections[settings.homepage_collection].products limit: settings.homepage_collection1_limit %}
       {% include 'product-grid-item' %}
     {% endfor %}
+  </section>
+
+  {% comment %}
+  ///////////////////////////////////////////////////////////////////////////////
+  // Lookbook Video
+  ///////////////////////////////////////////////////////////////////////////////
+  {% endcomment %}
+  {% assign video_path = settings.homepage_video_url %}
+
+  <section id="video-wrapper" class="index-video">
+    <video id="video" class="index-video-content"
+    preload autoplay autobuffer loop muted
+    "{{ video_path }}1280.jpg">
+      <source src="{{ video_path }}1280.mp4">
+      <source src="{{ video_path }}1280.ogv" type="video/ogg">
+      <source src="{{ video_path }}1280.webm" type="video/webm">
+    </video>
+    <div class="css-loader">Loading...</div>
   </section>
 
 </div>

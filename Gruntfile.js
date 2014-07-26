@@ -120,9 +120,51 @@ module.exports = function(grunt){
           },
           src: [
             'app/datauri/checkbox-selected.png',
-            'app/datauri/checkbox-unselected.png'
+            'app/datauri/checkbox-unselected.png',
+            'app/datauri/texture-light-grey.jpg',
+            'app/datauri/texture-horizontal-line.jpg'
           ],
           dest: [ 'app/styles/modules/_datauri.scss' ]
+        }
+      },
+
+      // VIDEO COMPRESSION
+      //////////////////////////////////////////////////////////////////////////
+      responsive_videos: {
+        dist: {
+          options: {
+            sizes: [{
+              width: 640,
+              poster: '00:00:05'
+            },{
+              width: 1280,
+              poster: '00:00:05'
+            }],
+            encodes:[{
+              webm: [
+                {'-vcodec': 'libvpx'},
+                {'-crf': '12'},
+                {'-b:v': '1.5M',},
+              ],
+              ogv: [
+                {'-vcodec': 'libtheora'},
+                {'-crf': '10'},
+                {'-b:v': '1.2M',},
+              ],
+              mp4: [
+                {'-vcodec':'libx264'},
+                {'-pix_fmt': 'yuv420p'},
+                {'-crf': '20'},
+                {'-threads': '0'}
+              ]
+            }]
+          },
+          files: [{
+            expand: true,
+            cwd: 'app/videos/uncompressed',
+            src: ['*.{mov,mp4}'],
+            dest: 'app/videos/output/'
+          }]
         }
       },
 
@@ -206,5 +248,6 @@ module.exports = function(grunt){
     grunt.registerTask('default', []);
     grunt.registerTask('data', ['datauri']);
     grunt.registerTask('images', ['imagemin']);
+    grunt.registerTask('videos', ['responsive_videos']);
 
 };

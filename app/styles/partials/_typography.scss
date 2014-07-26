@@ -189,7 +189,7 @@ $small-caps-weight: 500;
   font-weight: $weight;
   // Font-Style
   @if $style == 'italic' {
-    @extend %italic;
+    font-style: italic;
   }
   @if $case == 'up' {
     text-transform: uppercase;

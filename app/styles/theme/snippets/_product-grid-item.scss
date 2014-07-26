@@ -6,6 +6,7 @@
 
 .product-grid-item{
   @extend %grid-item;
+  @extend %medium--one-third;
   @extend %medium-up--one-third;
   position: relative;
 
@@ -65,7 +66,7 @@
 
   &__title{
     display: block;
-    @include type( $font-one, $beta, $bold, $case: 'up', $margin: false);
+    @include type( $font-one, $gamma, $bold, $case: 'up', $margin: false);
     @include scut-margin( n n 0.75rem n );
     color: $medGrey;
     transition: $time $easeOutSine;
@@ -74,8 +75,13 @@
     @include break($min, $small ){
       .no-touch &{
         transform: translateY(0.75rem);
-        @include type( $font-one, $giga, $bold, $case: 'up' );
+        @include type( $font-one, $mega, $bold, $case: 'up' );
         color: $white;
+      }
+    }
+    @include break($min, $medium ){
+      .no-touch &{
+        @include type( $font-one, $giga, $bold, $case: 'up' );
       }
     }
 
@@ -106,7 +112,7 @@
   }
 
   &__save{
-    @include type( $font-one, $epsilon, $book, $case: 'up', $margin: false);
+    @include type( $font-one, $epsilon, $book, $case: 'up', $style: 'italic', $margin: false);
     color: $medGrey;
     text-transform: uppercase;
     transition: $time $easeOutSine;
@@ -115,7 +121,7 @@
     @include break($min, $small){
       .no-touch &{
         transform: translateY(0.25rem);
-        @include type( $font-one, $epsilon, $book, $case: 'up', $margin: false);
+        @include type( $font-one, $epsilon, $book, $case: 'up', $style: 'italic', $margin: false);
         color: $white;
       }
     }

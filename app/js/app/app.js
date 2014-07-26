@@ -76,7 +76,7 @@ var app = {
     /////////////////////////////////////////////////////////////////////////////
     // Index Page
     if ( app.cache.template === 'index') {
-      //index.init();
+      index.init();
     }
     // Collection Page
     if ( app.cache.template === 'collection' ) {

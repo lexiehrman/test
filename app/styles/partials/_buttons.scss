@@ -24,9 +24,9 @@ $button-border-width: 2px;
 
 // Button Mixin
 ///////////////////////////////////////////////////////////////////////////////
-@mixin button( $style: 'light' ){
+@mixin button( $style: 'light', $filled: false ){
   display: inline-block;
-  @include type( $font-one, $alpha, $case: 'up' );
+  @include type( $font-one, $gamma, $style: 'italic', $case: 'up', $margin: false );
   @include scut-padding( 0.75rem 2.5rem );
   background: none;
   text-decoration: none;
@@ -53,6 +53,10 @@ $button-border-width: 2px;
       background: $buttonBg-ColorDark-Hover;
       @include scut-border( $button-border-width solid $buttonBg-ColorDark-Hover, y y y y );
     }
+  }
+
+  @if( $filled == true ){
+    background: $buttonText-ColorLight;
   }
 
   &.disabled{
