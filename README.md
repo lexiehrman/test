@@ -1,18 +1,9 @@
-# Callina E-Commerce
+# INTERWEBBERS TEST
 
 ### Project
 -----
-[CallinaStyle.com](http://callinastyle.myshopify.com)
+[theinterwebbers.com](http://theinterwebbers.myshopify.com)
 
-
-### Team Members
------
-* [Justin Metros](mailto:justin@radiatorstudios.com)
-* [Brian Metros](mailto:brian@radiatorstudios.com)
-
-### Project BaseCamp
------
-[Callina BaseCamp](https://basecamp.com/2107055/projects/5513878)
 
 ### System Requirements
 -----
