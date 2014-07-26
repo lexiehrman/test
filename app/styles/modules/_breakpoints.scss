@@ -22,3 +22,11 @@ $max: max-width;
 
 }
 
+/* 
+Usage
+
+@include break( $min, 768px ){
+  ...
+}
+
+*/

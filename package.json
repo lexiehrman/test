@@ -1,19 +1,19 @@
 {
-  "name": "CALLINA",
+  "name": "TheInterwebbers",
   "version": "0.1.0",
   "author": {
-    "name": "Radiator",
-    "email": "hi@radiatorstudios.com",
-    "url": "http://radiatorstudios.com"
+    "name": "TheInterwebbers",
+    "email": "hi@TheInterwebbers.com",
+    "url": "http://TheInterwebbers.com"
   },
   "private": true,
-  "description": "CALLINA E-Commerce by Radiator",
+  "description": "TheInterwebbers E-Commerce by TheInterwebbers",
   "repository": {
     "type": "git",
-    "url": "https://github.com/justinmetros/callinastyle.com"
+    "url": "https://github.com/lexiehrman/TheInterwebbers.com"
   },
   "bugs": {
-    "url": "https://github.com/justinmetros/callinastyle.com/issues"
+    "url": "https://github.com/lexiehrman/TheInterwebbers.com/issues"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

@@ -214,11 +214,11 @@ module.exports = function(grunt){
       //////////////////////////////////////////////////////////////////////////
       shopify: {
         options: {
-          api_key: "9df06ea65175bb8dbd48c24eadc88801",
-          password: "1fc604c668e586e882e2575c17125207",
-          url: "callina.myshopify.com",
+          api_key: "9e7c3ea41e8c5c3c45b9efed444c276f",
+          password: "a3d67adbc00802e37f77adf40ba45b61",
+          url: "the-interwebbers-dev.myshopify.com",
           base: "theme/",
-          theme: 9269095
+          theme: 9718991
         }
       },
 
